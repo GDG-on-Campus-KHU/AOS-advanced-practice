@@ -41,7 +41,7 @@ fun TabScreen(navController: NavController) {
         bottomBar = {
             Box(contentAlignment = Alignment.BottomCenter) {
                 Image(
-                    painter = painterResource(id = R.drawable.tab_bar),
+                    painter = painterResource(R.drawable.tab_bar),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxHeight(0.15f)
