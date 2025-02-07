@@ -31,7 +31,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
 
-@Suppress("UNUSED_EXPRESSION")
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "AutoboxingStateValueProperty")
 @Composable
 fun TabScreen(navController: NavController) {
