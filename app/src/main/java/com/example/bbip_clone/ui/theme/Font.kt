@@ -7,5 +7,7 @@ import com.example.bbip_clone.R
 
 val wantedSans = FontFamily(
     Font(R.font.wantedsans_medium, FontWeight.W500),
+    Font(R.font.wantedsans_semibold, FontWeight.W600),
     Font(R.font.wantedsans_bold, FontWeight.W700)
 )
+
