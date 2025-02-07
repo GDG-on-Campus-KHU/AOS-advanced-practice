@@ -54,6 +54,12 @@ val title3_m20 = TextStyle(
     textAlign = TextAlign.Center,
     letterSpacing = 0.01.em
 )
+val title4_sb24 = TextStyle(
+    fontFamily = wantedSans,
+    fontWeight = FontWeight.W600,
+    fontSize = 24.sp,
+    lineHeight = 28.64.sp,
+)
 val body1_b16 = TextStyle(
     fontFamily = wantedSans,
     fontWeight = FontWeight.W700,
