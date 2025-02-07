@@ -32,7 +32,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
-
+import com.example.bbip_clone.ui.theme.Gray4
+import com.example.bbip_clone.ui.theme.MainBlack
+import com.example.bbip_clone.ui.theme.MainWhite
 
 @SuppressLint("UnrememberedMutableInteractionSource", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -67,14 +69,14 @@ fun TabScreen(navController: NavController) {
                                 Icon(
                                     modifier = Modifier
                                         .size(30.dp)
-                                        .background(Color.White)
+                                        .background(MainWhite)
                                         .clickable(
                                             interactionSource = MutableInteractionSource(),
                                             indication = null
                                         ) { pagerState = index },
                                     imageVector = icon,
                                     contentDescription = null,
-                                    tint = if (pagerState == index) Color.Black else Color.LightGray
+                                    tint = if (pagerState == index) MainBlack else Gray4
                                 )
                             }
                         )
