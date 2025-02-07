@@ -33,6 +33,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
 
+
 @SuppressLint("UnrememberedMutableInteractionSource", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TabScreen(navController: NavController) {
@@ -43,7 +44,7 @@ fun TabScreen(navController: NavController) {
         bottomBar = {
             Box(contentAlignment = Alignment.BottomCenter) {
                 Image(
-                    painter = painterResource(id = R.drawable.tab_bar),
+                    painter = painterResource(R.drawable.tab_bar),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
