@@ -58,7 +58,7 @@ fun AppBar(screenCheck: String, noticeCheck: Boolean, studyTitle: String) {
                         Spacer(modifier = Modifier.weight(1f))
 
                         Box {
-                            IconButton(notificationsIcon, "notifications")
+                            customIconButton(notificationsIcon, "notifications")
                             if (noticeCheck)
                                 Box(
                                     modifier = Modifier
@@ -69,14 +69,14 @@ fun AppBar(screenCheck: String, noticeCheck: Boolean, studyTitle: String) {
                         }
                         Spacer(Modifier.width(12.dp))
 
-                        IconButton(personIcon, "person")
+                        customIconButton(personIcon, "person")
                     }
 
                     "StudyHome" -> {
                         Text(text = studyTitle, style = title4_sb24, color = MainWhite)
                         Spacer(modifier = Modifier.weight(1f))
 
-                        IconButton(moreVertIcon, "moreVert")
+                        customIconButton(moreVertIcon, "moreVert")
                     }
                 }
                 Spacer(Modifier.width(28.dp))
@@ -86,7 +86,7 @@ fun AppBar(screenCheck: String, noticeCheck: Boolean, studyTitle: String) {
 }
 
 @Composable
-fun IconButton(icon: ImageVector, iconString: String) {
+fun customIconButton(icon: ImageVector, iconString: String) {
     Icon(
         imageVector = icon,
         contentDescription = "$icon",
