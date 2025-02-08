@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.bbip_clone.network.getNotionCheck
 
 @Composable
 fun UserHomeScreen(navController: NavController) {
@@ -22,7 +23,7 @@ fun UserHomeScreen(navController: NavController) {
 
     LaunchedEffect(Unit) {
         // 알림 여부(빨간 점) api 추가
-        noticeCheck = true
+        noticeCheck = getNotionCheck(true)
     }
 
     Scaffold(
