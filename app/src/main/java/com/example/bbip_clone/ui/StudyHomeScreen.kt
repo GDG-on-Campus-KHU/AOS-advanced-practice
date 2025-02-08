@@ -4,13 +4,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -21,23 +24,42 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
+import com.example.bbip_clone.convertTodayDate
+import com.example.bbip_clone.model.StudyWeekData
+import com.example.bbip_clone.network.getStudyTitle
+import com.example.bbip_clone.network.getStudyWeekData
+import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray9
+import com.example.bbip_clone.ui.theme.MainWhite
+import com.example.bbip_clone.ui.theme.body2_m14
 
 @Composable
 fun StudyHomeScreen(navController: NavController) {
     var studyTitle by remember { mutableStateOf("") }
+    var studyWeek by remember { mutableStateOf(emptyList<StudyWeekData>()) }
+    var thisWeek by remember { mutableStateOf("") }
+    var weekNotice by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
-        // 스터디 제목 api 추가
-        studyTitle = "TOEIC / IELTS 스터디"
+        studyTitle = getStudyTitle("id")
+        studyWeek = getStudyWeekData()
+        studyWeek.firstOrNull { it.date > convertTodayDate() }?.let {
+            thisWeek = it.title
+            weekNotice = it.content
+        }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Gray1)
+    ) {
         Box(
             modifier = Modifier
                 .background(Gray9)
@@ -56,16 +78,29 @@ fun StudyHomeScreen(navController: NavController) {
         }
 
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
             containerColor = Color.Transparent,
             topBar = { AppBar("StudyHome", false, studyTitle) }
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it)
-            ) {
+            Column(modifier = Modifier.padding(it)) {
+                Column(
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 200.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RoundedBackgroundText("${thisWeek}R")
+                        Spacer(modifier = Modifier.width(8.dp))
 
+                        Text(
+                            text = weekNotice,
+                            style = body2_m14,
+                            color = MainWhite,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
             }
         }
     }
