@@ -1,7 +1,6 @@
 package com.example.bbip_clone.network
 
-import com.example.bbip_clone.model.StudyWeek
-import com.example.bbip_clone.model.WeekData
+import com.example.bbip_clone.model.StudyWeekData
 
 fun getNotionCheck(id: Boolean): Boolean {
     return id
@@ -11,19 +10,19 @@ fun getStudyTitle(id: String): String {
     return "TOEIC / IELTS 스터디"
 }
 
-fun getStudyWeekData(): List<StudyWeek> {
-    val studyWeekList = mutableListOf<WeekData>()
+fun getStudyWeekData(): List<StudyWeekData> {
+    val studyDataList = mutableListOf<StudyWeekData>()
 
-    studyWeekList.add(WeekData("1", "", "2024년 9월 24일"))
-    studyWeekList.add(WeekData("2", "", "2024년 10월 29일"))
-    studyWeekList.add(WeekData("3", "", "2024년 11월 29일"))
-    studyWeekList.add(WeekData("4", "", "2024년 12월 29일"))
-    studyWeekList.add(WeekData("5", "", "2025년 1월 3일"))
-    studyWeekList.add(WeekData("6", "", "2025년 1월 10일"))
-    studyWeekList.add(WeekData("7", "", "2025년 1월 17일"))
-    studyWeekList.add(WeekData("8", "", "2025년 1월 24일"))
-    studyWeekList.add(WeekData("9", "오늘은 공부하지 말까여..", "2025년 2월 15일"))
-    studyWeekList.add(WeekData("10", "", "2025년 2월 23일"))
+    studyDataList.add(StudyWeekData("1", "", "20240924"))
+    studyDataList.add(StudyWeekData("2", "", "20241029"))
+    studyDataList.add(StudyWeekData("3", "", "20241129"))
+    studyDataList.add(StudyWeekData("4", "", "20241229"))
+    studyDataList.add(StudyWeekData("5", "", "20250103"))
+    studyDataList.add(StudyWeekData("6", "", "20250110"))
+    studyDataList.add(StudyWeekData("7", "", "20250117"))
+    studyDataList.add(StudyWeekData("8", "", "20250124"))
+    studyDataList.add(StudyWeekData("9", "오늘은 공부하지 말까여..", "20250215"))
+    studyDataList.add(StudyWeekData("10", "", "20250223"))
 
-    return listOf(StudyWeek(studyWeekList))
+    return studyDataList
 }
