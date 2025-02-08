@@ -1,10 +1,6 @@
 package com.example.bbip_clone.model
 
-data class StudyWeek(
-    val studyWeek: List<WeekData>,
-)
-
-data class WeekData(
+data class StudyWeekData(
     val title: String,
     val content: String,
     val date: String
