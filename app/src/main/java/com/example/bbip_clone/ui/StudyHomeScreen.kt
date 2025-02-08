@@ -37,7 +37,9 @@ import com.example.bbip_clone.network.getStudyWeekData
 import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray9
 import com.example.bbip_clone.ui.theme.MainWhite
+import com.example.bbip_clone.ui.theme.PrimaryDark
 import com.example.bbip_clone.ui.theme.body2_m14
+import com.example.bbip_clone.ui.theme.caption2_m12
 
 @Composable
 fun StudyHomeScreen(navController: NavController) {
@@ -89,7 +91,7 @@ fun StudyHomeScreen(navController: NavController) {
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        RoundedBackgroundText("${thisWeek}R")
+                        RoundedBackgroundText("${thisWeek}R", caption2_m12, MainWhite, PrimaryDark)
                         Spacer(modifier = Modifier.width(8.dp))
 
                         Text(
