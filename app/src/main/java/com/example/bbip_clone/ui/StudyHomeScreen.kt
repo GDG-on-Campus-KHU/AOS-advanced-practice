@@ -2,6 +2,7 @@ package com.example.bbip_clone.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,7 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,12 +27,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
@@ -43,7 +41,6 @@ import com.example.bbip_clone.network.getStudyTitle
 import com.example.bbip_clone.network.getStudyWeekData
 import com.example.bbip_clone.network.getWeekData
 import com.example.bbip_clone.ui.theme.Gray1
-import com.example.bbip_clone.ui.theme.Gray6
 import com.example.bbip_clone.ui.theme.Gray9
 import com.example.bbip_clone.ui.theme.MainWhite
 import com.example.bbip_clone.ui.theme.PrimaryDark
@@ -82,13 +79,13 @@ fun StudyHomeScreen(navController: NavController) {
         Box(
             modifier = Modifier
                 .background(Gray9)
-                .height(400.dp)
+                .height(300.dp)
                 .fillMaxWidth()
                 .align(Alignment.TopCenter)
         )
 
         Column(modifier = Modifier.align(Alignment.TopEnd)) {
-            Spacer(Modifier.height(170.dp))
+            Spacer(Modifier.height(75.dp))
             Image(
                 painter = painterResource(R.drawable.study_mask),
                 contentDescription = "StudyMask",
@@ -127,6 +124,19 @@ fun StudyHomeScreen(navController: NavController) {
                 }
             }
         }
+    }
+}
+
+
+@Composable
+fun FeatureRow() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        StudyOptions(R.drawable.attendance_certification, "출석 인증")
+        StudyOptions(R.drawable.check_location, "장소 확인")
+        StudyOptions(R.drawable.archive, "아카이브")
     }
 }
 
