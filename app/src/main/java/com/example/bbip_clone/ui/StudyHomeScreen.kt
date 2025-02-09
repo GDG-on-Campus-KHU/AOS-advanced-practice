@@ -51,24 +51,27 @@ import com.example.bbip_clone.ui.theme.place
 @Composable
 fun StudyHomeScreen(navController: NavController) {
     var studyTitle by remember { mutableStateOf("") }
-    var studyWeek by remember { mutableStateOf(emptyList<StudyWeekData>()) }
+    var studyData by remember { mutableStateOf(emptyList<StudyWeekData>()) }
     var thisWeek by remember { mutableStateOf("") }
-    var weekNotice by remember { mutableStateOf("") }
-    var weekDate by remember { mutableStateOf("") }
-    var weekDateFormatted by remember { mutableStateOf("") }
-    var weekLocation by remember { mutableStateOf("") }
+    var studyWeek by remember { mutableStateOf("") }
+    var thisWeekNotice by remember { mutableStateOf("") }
+    var thisWeekDate by remember { mutableStateOf("") }
+    var thisWeekDateFormatted by remember { mutableStateOf("") }
+    var thisWeekLocation by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         studyTitle = getStudyTitle("id")
-        studyWeek = getStudyWeekData()
-        studyWeek.firstOrNull { it.date > convertTodayDate() }?.let {
-            weekDate = it.date
+        studyData = getStudyWeekData()
+        studyWeek = studyData.size.toString()
+        studyData.firstOrNull { it.date > convertTodayDate() }?.let {
+            thisWeekDate = it.date
             thisWeek = it.title
-            weekNotice = it.content
+            thisWeekNotice = it.content
         }
         getWeekData(thisWeek).let {
-            weekDateFormatted = "${convertDateFormat(weekDate)} / ${it.startTime} ~ ${it.endTime}"
-            weekLocation = it.location
+            thisWeekDateFormatted =
+                "${convertDateFormat(thisWeekDate)} / ${it.startTime} ~ ${it.endTime}"
+            thisWeekLocation = it.location
         }
     }
 
@@ -111,7 +114,7 @@ fun StudyHomeScreen(navController: NavController) {
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
-                    text = weekNotice,
+                    text = thisWeekNotice,
                     style = body2_m14,
                     color = MainWhite,
                     maxLines = 1,
@@ -120,9 +123,9 @@ fun StudyHomeScreen(navController: NavController) {
             }
             Spacer(Modifier.height(10.dp))
 
-            WeekInfo(homeIcon, weekDateFormatted)
+            WeekInfo(homeIcon, thisWeekDateFormatted)
             Spacer(Modifier.height(4.dp))
-            WeekInfo(dateRangeIcon, weekLocation)
+            WeekInfo(dateRangeIcon, thisWeekLocation)
             Spacer(Modifier.height(225.dp))
 
             Row(
