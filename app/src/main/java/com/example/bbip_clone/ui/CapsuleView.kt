@@ -1,9 +1,12 @@
 package com.example.bbip_clone.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -16,8 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.bbip_clone.ui.theme.Gray2
 import com.example.bbip_clone.ui.theme.Gray6
 import com.example.bbip_clone.ui.theme.caption2_m12
@@ -59,6 +64,26 @@ fun WeekInfo(icon: ImageVector, text:String) {
             text = text,
             style = caption2_m12,
             color = Gray2
+        )
+    }
+}
+
+@Composable
+fun StudyOptions(iconRes: Int, text: String) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(8.dp)
+    ) {
+        Image(
+            painter = painterResource(id = iconRes),
+            contentDescription = text,
+            modifier = Modifier.size(50.dp)
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = text,
+            fontSize = 14.sp,
+            color = Color.Gray
         )
     }
 }
