@@ -72,8 +72,6 @@ fun StudyHomeScreen(navController: NavController) {
         }
     }
 
-
-
     Scaffold(
         topBar = { AppBar("StudyHome", false, studyTitle) })
     {
@@ -98,40 +96,42 @@ fun StudyHomeScreen(navController: NavController) {
                     modifier = Modifier.size(300.dp)
                 )
             }
+        }
 
-            Column(modifier = Modifier.padding(it)) {
-                Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 200.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RoundedBackgroundText("${thisWeek}R", caption2_m12, MainWhite, PrimaryDark)
-                        Spacer(modifier = Modifier.width(8.dp))
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .padding(start = 16.dp, end = 16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RoundedBackgroundText("${thisWeek}R", caption2_m12, MainWhite, PrimaryDark)
+                Spacer(modifier = Modifier.width(8.dp))
 
-                        Text(
-                            text = weekNotice,
-                            style = body2_m14,
-                            color = MainWhite,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                    Spacer(Modifier.height(10.dp))
+                Text(
+                    text = weekNotice,
+                    style = body2_m14,
+                    color = MainWhite,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+            Spacer(Modifier.height(10.dp))
 
-                    WeekInfo(homeIcon, weekDateFormatted)
-                    Spacer(Modifier.height(4.dp))
-                    WeekInfo(dateRangeIcon, weekLocation)
-                }
+            WeekInfo(homeIcon, weekDateFormatted)
+            Spacer(Modifier.height(4.dp))
+            WeekInfo(dateRangeIcon, weekLocation)
+            Spacer(Modifier.height(225.dp))
 
-                Spacer(Modifier.height(15.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    StudyOptions(R.drawable.attendance_certification, certification)
-                    StudyOptions(R.drawable.check_location, place)
-                    StudyOptions(R.drawable.archive, archive)
-                }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                StudyOptions(R.drawable.attendance_certification, certification)
+                StudyOptions(R.drawable.check_location, place)
+                StudyOptions(R.drawable.archive, archive)
             }
         }
     }
