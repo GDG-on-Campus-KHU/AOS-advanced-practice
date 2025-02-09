@@ -1,7 +1,7 @@
 package com.example.bbip_clone.model
 
 data class StudyWeekData(
-    val title: String,
-    val content: String,
+    val round: String,
+    val notice: String,
     val date: String
 )

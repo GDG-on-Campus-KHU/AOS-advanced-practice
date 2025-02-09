@@ -62,8 +62,8 @@ import com.example.bbip_clone.ui.theme.progress
 fun StudyHomeScreen(navController: NavController) {
     var studyTitle by remember { mutableStateOf("") }
     var studyData by remember { mutableStateOf(emptyList<StudyWeekData>()) }
-    var thisWeek by remember { mutableStateOf("") }
-    var studyWeek by remember { mutableStateOf("") }
+    var thisWeekRound by remember { mutableStateOf("") }
+    var studyLastRound by remember { mutableStateOf("") }
     var thisWeekNotice by remember { mutableStateOf("") }
     var thisWeekDate by remember { mutableStateOf("") }
     var thisWeekDateFormatted by remember { mutableStateOf("") }
@@ -72,13 +72,14 @@ fun StudyHomeScreen(navController: NavController) {
     LaunchedEffect(Unit) {
         studyTitle = getStudyTitle("id")
         studyData = getStudyWeekData()
-        studyWeek = studyData.size.toString()
+        studyLastRound = studyData.size.toString()
         studyData.firstOrNull { it.date > convertTodayDate() }?.let {
+            thisWeekRound = it.round
+            thisWeekNotice = it.notice
             thisWeekDate = it.date
-            thisWeek = it.title
-            thisWeekNotice = it.content
         }
-        getWeekData(thisWeek).let {
+        studyLastRound = studyData.last().round
+        getWeekData(thisWeekRound).let {
             thisWeekDateFormatted =
                 "${convertDateFormat(thisWeekDate)} / ${it.startTime} ~ ${it.endTime}"
             thisWeekLocation = it.location
@@ -120,7 +121,7 @@ fun StudyHomeScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                RoundedBackgroundText("${thisWeek}R", caption2_m12, MainWhite, PrimaryDark)
+                RoundedBackgroundText("${thisWeekRound}R", caption2_m12, MainWhite, PrimaryDark)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = thisWeekNotice,
