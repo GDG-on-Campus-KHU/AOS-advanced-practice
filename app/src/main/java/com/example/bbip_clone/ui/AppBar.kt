@@ -50,8 +50,8 @@ fun AppBar(screenCheck: String, noticeCheck: Boolean, studyTitle: String) {
                 when (screenCheck) {
                     "UserHome" -> {
                         Text(text = home, style = title3_m20)
-                        Spacer(modifier = Modifier.weight(1f))
 
+                        Spacer(modifier = Modifier.weight(1f))
                         Box {
                             CustomIconButton(notificationsIcon, "notifications")
                             if (noticeCheck)
@@ -62,15 +62,14 @@ fun AppBar(screenCheck: String, noticeCheck: Boolean, studyTitle: String) {
                                         .align(Alignment.TopEnd)
                                 )
                         }
-                        Spacer(Modifier.width(12.dp))
 
+                        Spacer(Modifier.width(12.dp))
                         CustomIconButton(personIcon, "person")
                     }
 
                     "StudyHome" -> {
                         Text(text = studyTitle, style = title4_sb24, color = MainWhite)
                         Spacer(modifier = Modifier.weight(1f))
-
                         CustomIconButton(moreVertIcon, "moreVert")
                     }
                 }

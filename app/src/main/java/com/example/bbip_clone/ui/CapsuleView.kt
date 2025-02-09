@@ -27,8 +27,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray2
 import com.example.bbip_clone.ui.theme.Gray6
 import com.example.bbip_clone.ui.theme.archive
@@ -69,7 +67,6 @@ fun WeekInfo(icon: ImageVector, text: String) {
             tint = Gray6
         )
         Spacer(modifier = Modifier.width(4.dp))
-
         Text(
             text = text,
             style = caption2_m12,
