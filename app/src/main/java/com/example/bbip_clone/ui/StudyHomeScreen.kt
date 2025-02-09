@@ -13,9 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,8 +40,13 @@ import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray9
 import com.example.bbip_clone.ui.theme.MainWhite
 import com.example.bbip_clone.ui.theme.PrimaryDark
+import com.example.bbip_clone.ui.theme.archive
 import com.example.bbip_clone.ui.theme.body2_m14
 import com.example.bbip_clone.ui.theme.caption2_m12
+import com.example.bbip_clone.ui.theme.certification
+import com.example.bbip_clone.ui.theme.dateRangeIcon
+import com.example.bbip_clone.ui.theme.homeIcon
+import com.example.bbip_clone.ui.theme.place
 
 @Composable
 fun StudyHomeScreen(navController: NavController) {
@@ -71,32 +72,33 @@ fun StudyHomeScreen(navController: NavController) {
         }
     }
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Gray1)
-    ) {
+
+
+    Scaffold(
+        topBar = { AppBar("StudyHome", false, studyTitle) })
+    {
         Box(
             modifier = Modifier
-                .background(Gray9)
-                .height(300.dp)
-                .fillMaxWidth()
-                .align(Alignment.TopCenter)
-        )
-
-        Column(modifier = Modifier.align(Alignment.TopEnd)) {
-            Spacer(Modifier.height(75.dp))
-            Image(
-                painter = painterResource(R.drawable.study_mask),
-                contentDescription = "StudyMask",
-                modifier = Modifier.size(300.dp)
-            )
-        }
-
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = { AppBar("StudyHome", false, studyTitle) }
+                .fillMaxSize()
+                .background(Gray1)
         ) {
+            Box(
+                modifier = Modifier
+                    .background(Gray9)
+                    .height(300.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.TopCenter)
+            )
+
+            Column(modifier = Modifier.align(Alignment.TopEnd)) {
+                Spacer(Modifier.height(75.dp))
+                Image(
+                    painter = painterResource(R.drawable.study_mask),
+                    contentDescription = "StudyMask",
+                    modifier = Modifier.size(300.dp)
+                )
+            }
+
             Column(modifier = Modifier.padding(it)) {
                 Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 200.dp)) {
                     Row(
@@ -115,8 +117,6 @@ fun StudyHomeScreen(navController: NavController) {
                         )
                     }
                     Spacer(Modifier.height(10.dp))
-                    val homeIcon = Icons.Filled.Home
-                    val dateRangeIcon = Icons.Filled.DateRange
 
                     WeekInfo(homeIcon, weekDateFormatted)
                     Spacer(Modifier.height(4.dp))
@@ -124,19 +124,6 @@ fun StudyHomeScreen(navController: NavController) {
                 }
             }
         }
-    }
-}
-
-
-@Composable
-fun FeatureRow() {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly
-    ) {
-        StudyOptions(R.drawable.attendance_certification, "출석 인증")
-        StudyOptions(R.drawable.check_location, "장소 확인")
-        StudyOptions(R.drawable.archive, "아카이브")
     }
 }
 
