@@ -122,6 +122,16 @@ fun StudyHomeScreen(navController: NavController) {
                     Spacer(Modifier.height(4.dp))
                     WeekInfo(dateRangeIcon, weekLocation)
                 }
+
+                Spacer(Modifier.height(15.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    StudyOptions(R.drawable.attendance_certification, certification)
+                    StudyOptions(R.drawable.check_location, place)
+                    StudyOptions(R.drawable.archive, archive)
+                }
             }
         }
     }
