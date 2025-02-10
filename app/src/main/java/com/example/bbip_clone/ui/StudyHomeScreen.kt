@@ -37,6 +37,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
 import com.example.bbip_clone.convertDateFormat
 import com.example.bbip_clone.convertTodayDate
+import com.example.bbip_clone.formatNumber
 import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.network.getStudyTitle
 import com.example.bbip_clone.network.getStudyWeekData
@@ -187,7 +188,7 @@ fun StudyHomeScreen(navController: NavController) {
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Text(
-                        text = "($thisWeekDate ~ $lastWeekDate)",
+                        text = "(${formatNumber(thisWeekDate)}~${formatNumber(lastWeekDate)})",
                         style = caption2_m12,
                         color = Gray5
                     )
