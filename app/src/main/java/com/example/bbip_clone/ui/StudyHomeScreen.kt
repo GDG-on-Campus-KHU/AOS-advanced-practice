@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
@@ -26,13 +27,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
@@ -44,8 +43,12 @@ import com.example.bbip_clone.network.getStudyWeekData
 import com.example.bbip_clone.network.getWeekData
 import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray2
+import com.example.bbip_clone.ui.theme.Gray3
+import com.example.bbip_clone.ui.theme.Gray4
+import com.example.bbip_clone.ui.theme.Gray5
 import com.example.bbip_clone.ui.theme.Gray8
 import com.example.bbip_clone.ui.theme.Gray9
+import com.example.bbip_clone.ui.theme.MainBlack
 import com.example.bbip_clone.ui.theme.MainWhite
 import com.example.bbip_clone.ui.theme.PrimaryDark
 import com.example.bbip_clone.ui.theme.archive
@@ -57,6 +60,7 @@ import com.example.bbip_clone.ui.theme.dateRangeIcon
 import com.example.bbip_clone.ui.theme.homeIcon
 import com.example.bbip_clone.ui.theme.place
 import com.example.bbip_clone.ui.theme.progress
+import com.example.bbip_clone.ui.theme.title3_sb20
 
 @Composable
 fun StudyHomeScreen(navController: NavController) {
@@ -66,6 +70,7 @@ fun StudyHomeScreen(navController: NavController) {
     var studyLastRound by remember { mutableStateOf("") }
     var thisWeekNotice by remember { mutableStateOf("") }
     var thisWeekDate by remember { mutableStateOf("") }
+    var lastWeekDate by remember { mutableStateOf("") }
     var thisWeekDateFormatted by remember { mutableStateOf("") }
     var thisWeekLocation by remember { mutableStateOf("") }
 
@@ -73,6 +78,7 @@ fun StudyHomeScreen(navController: NavController) {
         studyTitle = getStudyTitle("id")
         studyData = getStudyWeekData()
         studyLastRound = studyData.size.toString()
+        lastWeekDate = studyData.last().date
         studyData.firstOrNull { it.date > convertTodayDate() }?.let {
             thisWeekRound = it.round
             thisWeekNotice = it.notice
@@ -145,6 +151,75 @@ fun StudyHomeScreen(navController: NavController) {
                 StudyOptions(R.drawable.attendance_certification, certification)
                 StudyOptions(R.drawable.check_location, place)
                 StudyOptions(R.drawable.archive, archive)
+            }
+
+            Spacer(Modifier.height(25.dp))
+            Text(
+                modifier = Modifier.padding(start = 12.dp),
+                text = progress,
+                style = body1_b16,
+                color = Gray8
+            )
+
+            Spacer(Modifier.height(10.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .shadow(16.dp, RoundedCornerShape(12.dp), spotColor = Gray2)
+                    .background(MainWhite, RoundedCornerShape(12.dp))
+                    .padding(16.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 5.dp, end = 5.dp)
+                ) {
+                    Text(
+                        text = "${thisWeekRound}R / ",
+                        style = title3_sb20,
+                        color = MainBlack
+                    )
+                    Text(
+                        text = "${studyLastRound}R",
+                        style = title3_sb20,
+                        color = Gray5
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        text = "($thisWeekDate ~ $lastWeekDate)",
+                        style = caption2_m12,
+                        color = Gray5
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    val thisWeekRoundFloat = thisWeekRound.toFloatOrNull() ?: 0f
+                    val studyLastRoundFloat = studyLastRound.toFloatOrNull() ?: 1f
+                    LinearProgressIndicator(
+                        progress = { thisWeekRoundFloat / studyLastRoundFloat },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(7.dp)
+                            .clip(RoundedCornerShape(15.dp))
+                            .align(Alignment.Center),
+                        color = PrimaryDark,
+                        trackColor = Gray2,
+                    )
+                    Row {
+                        if (thisWeekRoundFloat != 0f) {
+                            Spacer(Modifier.weight(thisWeekRoundFloat))
+                            Box(
+                                modifier = Modifier
+                                    .size(12.dp)
+                                    .clip(CircleShape)
+                                    .background(PrimaryDark)
+                            )
+                            Spacer(Modifier.weight(studyLastRoundFloat - thisWeekRoundFloat))
+                        }
+                    }
+                }
             }
         }
     }
