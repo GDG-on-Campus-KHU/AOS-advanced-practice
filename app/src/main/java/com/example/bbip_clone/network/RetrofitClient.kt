@@ -14,7 +14,7 @@ fun getStudyTitle(id: String): String {
 }
 
 fun getWeekData(thisWeek: String): WeekDate {
-    return WeekDate("12:00", "18:00", "스타벅스 강남역")
+    return WeekDate("12:00", "18:00", "2차 과제 제출 및 피드백 확인", "스타벅스 강남역")
 }
 
 fun getStudyWeekData(): List<StudyWeekData> {
@@ -28,8 +28,8 @@ fun getStudyWeekData(): List<StudyWeekData> {
     studyDataList.add(StudyWeekData("6", "", "20250110"))
     studyDataList.add(StudyWeekData("7", "", "20250117"))
     studyDataList.add(StudyWeekData("8", "", "20250124"))
-    studyDataList.add(StudyWeekData("9", "오늘은 공부하지 말까여..", "20250215"))
-    studyDataList.add(StudyWeekData("10", "", "20250223"))
+    studyDataList.add(StudyWeekData("9", "", "20250215"))
+    studyDataList.add(StudyWeekData("10", "오늘은 공부하지 말까여..", "20250223"))
 
     return studyDataList
 }

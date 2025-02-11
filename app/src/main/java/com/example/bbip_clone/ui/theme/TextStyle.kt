@@ -82,6 +82,12 @@ val body1_m16 = TextStyle(
     lineHeight = 25.sp,
     textAlign = TextAlign.Center
 )
+val body1_sb16 = TextStyle(
+    fontFamily = wantedSans,
+    fontWeight = FontWeight.W600,
+    fontSize = 16.sp,
+    lineHeight = 19.09.sp
+)
 val body2_b14 = TextStyle(
     fontFamily = wantedSans,
     fontWeight = FontWeight.W700,

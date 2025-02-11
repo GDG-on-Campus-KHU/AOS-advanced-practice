@@ -2,6 +2,7 @@ package com.example.bbip_clone.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -35,23 +37,24 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
-import com.example.bbip_clone.convertDateFormat
+import com.example.bbip_clone.convertNumberToDate
 import com.example.bbip_clone.convertTodayDate
 import com.example.bbip_clone.formatNumber
 import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.network.getStudyTitle
 import com.example.bbip_clone.network.getStudyWeekData
 import com.example.bbip_clone.network.getWeekData
+import com.example.bbip_clone.ui.theme.ArrowRight
 import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray2
-import com.example.bbip_clone.ui.theme.Gray3
-import com.example.bbip_clone.ui.theme.Gray4
 import com.example.bbip_clone.ui.theme.Gray5
+import com.example.bbip_clone.ui.theme.Gray7
 import com.example.bbip_clone.ui.theme.Gray8
 import com.example.bbip_clone.ui.theme.Gray9
 import com.example.bbip_clone.ui.theme.MainBlack
 import com.example.bbip_clone.ui.theme.MainWhite
 import com.example.bbip_clone.ui.theme.PrimaryDark
+import com.example.bbip_clone.ui.theme.allView
 import com.example.bbip_clone.ui.theme.archive
 import com.example.bbip_clone.ui.theme.body1_b16
 import com.example.bbip_clone.ui.theme.body2_m14
@@ -62,14 +65,16 @@ import com.example.bbip_clone.ui.theme.homeIcon
 import com.example.bbip_clone.ui.theme.place
 import com.example.bbip_clone.ui.theme.progress
 import com.example.bbip_clone.ui.theme.title3_sb20
+import com.example.bbip_clone.ui.theme.weekActivities
 
 @Composable
 fun StudyHomeScreen(navController: NavController) {
     var studyTitle by remember { mutableStateOf("") }
     var studyData by remember { mutableStateOf(emptyList<StudyWeekData>()) }
+    var studyNotice by remember { mutableStateOf("") }
     var thisWeekRound by remember { mutableStateOf("") }
     var studyLastRound by remember { mutableStateOf("") }
-    var thisWeekNotice by remember { mutableStateOf("") }
+    var thisWeekContent by remember { mutableStateOf("") }
     var thisWeekDate by remember { mutableStateOf("") }
     var lastWeekDate by remember { mutableStateOf("") }
     var thisWeekDateFormatted by remember { mutableStateOf("") }
@@ -82,14 +87,15 @@ fun StudyHomeScreen(navController: NavController) {
         lastWeekDate = studyData.last().date
         studyData.firstOrNull { it.date > convertTodayDate() }?.let {
             thisWeekRound = it.round
-            thisWeekNotice = it.notice
+            thisWeekContent = it.content
             thisWeekDate = it.date
         }
         studyLastRound = studyData.last().round
         getWeekData(thisWeekRound).let {
             thisWeekDateFormatted =
-                "${convertDateFormat(thisWeekDate)} / ${it.startTime} ~ ${it.endTime}"
+                "${convertNumberToDate(thisWeekDate)} / ${it.startTime} ~ ${it.endTime}"
             thisWeekLocation = it.location
+            studyNotice = it.notice
         }
     }
 
@@ -131,7 +137,7 @@ fun StudyHomeScreen(navController: NavController) {
                 RoundedBackgroundText("${thisWeekRound}R", caption2_m12, MainWhite, PrimaryDark)
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = thisWeekNotice,
+                    text = studyNotice,
                     style = body2_m14,
                     color = MainWhite,
                     maxLines = 1,
@@ -221,6 +227,35 @@ fun StudyHomeScreen(navController: NavController) {
                         }
                     }
                 }
+            }
+
+            Spacer(Modifier.height(23.dp))
+            Row(
+                modifier = Modifier.padding(start = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = weekActivities,
+                    style = body1_b16,
+                    color = Gray8
+                )
+                Spacer(Modifier.weight(1f))
+                Text(
+                    modifier = Modifier.clickable { },
+                    text = allView,
+                    style = body2_m14,
+                    color = Gray7
+                )
+                Icon(
+                    imageVector = ArrowRight,
+                    contentDescription = "화살표",
+                    tint = Gray7
+                )
+            }
+
+            Spacer(Modifier.height(15.dp))
+            studyData.drop((thisWeekRound.toIntOrNull() ?: 1) - 1).forEach { activity ->
+                WeekActivity(activity, thisWeekRound)
             }
         }
     }
