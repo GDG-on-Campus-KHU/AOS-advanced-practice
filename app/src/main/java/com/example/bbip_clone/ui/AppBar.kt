@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.bbip_clone.ui.theme.Gray1
+import com.example.bbip_clone.ui.theme.Gray9
 import com.example.bbip_clone.ui.theme.MainBlack
 import com.example.bbip_clone.ui.theme.MainWhite
 import com.example.bbip_clone.ui.theme.home
@@ -40,7 +41,11 @@ import com.example.bbip_clone.ui.theme.title4_sb24
 fun AppBar(screenCheck: String, noticeCheck: Boolean, studyTitle: String) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Transparent
+            containerColor = when (screenCheck) {
+                "UserHome" -> Gray1
+                "StudyHome" -> Gray9
+                else -> Color.Transparent
+            }
         ),
         title = {
             Row(
