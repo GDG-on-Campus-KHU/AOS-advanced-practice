@@ -31,3 +31,7 @@ fun convertNumberToDate(dateNumber: String): String {
 
     return date.format(outputFormatter)
 }
+
+fun formatNumber(number: String): String {
+    return number.padStart(8, '0').replace(Regex("(\\d{4})(\\d{2})(\\d{2})"), "$1.$2.$3")
+}
