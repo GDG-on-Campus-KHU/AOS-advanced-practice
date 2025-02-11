@@ -1,6 +1,8 @@
 package com.example.bbip_clone.network
 
+import com.example.bbip_clone.R
 import com.example.bbip_clone.model.StudyWeekData
+import com.example.bbip_clone.model.TeamMember
 import com.example.bbip_clone.model.WeekDate
 
 // 네트워크 예시 데이터
@@ -17,7 +19,7 @@ fun getWeekData(thisWeek: String): WeekDate {
     return WeekDate("12:00", "18:00", "2차 과제 제출 및 피드백 확인", "스타벅스 강남역")
 }
 
-fun getStudyWeekData(): List<StudyWeekData> {
+fun getStudyWeekData(id: String): List<StudyWeekData> {
     val studyDataList = mutableListOf<StudyWeekData>()
 
     studyDataList.add(StudyWeekData("1", "", "20240924"))
@@ -32,4 +34,14 @@ fun getStudyWeekData(): List<StudyWeekData> {
     studyDataList.add(StudyWeekData("10", "오늘은 공부하지 말까여..", "20250223"))
 
     return studyDataList
+}
+
+fun getTeamMember(id: String): List<TeamMember> {
+    val teamMembers = listOf(
+        TeamMember("Andy", "팀장", R.drawable.ic_launcher_background),
+        TeamMember("Andy", "팀원", R.drawable.ic_launcher_background),
+        TeamMember("Andy", "팀원", R.drawable.ic_launcher_background)
+    )
+
+    return teamMembers
 }
