@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
@@ -46,6 +44,7 @@ import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.network.getStudyTitle
 import com.example.bbip_clone.network.getStudyWeekData
 import com.example.bbip_clone.network.getWeekData
+import com.example.bbip_clone.ui.theme.ArrowRight
 import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray2
 import com.example.bbip_clone.ui.theme.Gray5
@@ -248,7 +247,7 @@ fun StudyHomeScreen(navController: NavController) {
                     color = Gray7
                 )
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    imageVector = ArrowRight,
                     contentDescription = "화살표",
                     tint = Gray7
                 )
