@@ -40,7 +40,6 @@ fun getTeamMember(id: String): List<TeamMember> {
     val teamMembers = listOf(
         TeamMember("Andy", "팀장", R.drawable.ic_launcher_background),
         TeamMember("Andy", "팀원", R.drawable.ic_launcher_background),
-        TeamMember("Andy", "팀원", R.drawable.ic_launcher_background),
         TeamMember("Andy", "팀원", R.drawable.ic_launcher_background)
     )
 
