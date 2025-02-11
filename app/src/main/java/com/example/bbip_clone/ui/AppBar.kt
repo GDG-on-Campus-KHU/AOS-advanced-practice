@@ -11,10 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,16 +29,15 @@ import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.MainBlack
 import com.example.bbip_clone.ui.theme.MainWhite
 import com.example.bbip_clone.ui.theme.home
+import com.example.bbip_clone.ui.theme.moreVertIcon
+import com.example.bbip_clone.ui.theme.notificationsIcon
+import com.example.bbip_clone.ui.theme.personIcon
 import com.example.bbip_clone.ui.theme.title3_m20
 import com.example.bbip_clone.ui.theme.title4_sb24
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar(screenCheck: String, noticeCheck: Boolean, studyTitle: String) {
-    val notificationsIcon = Icons.Filled.Notifications
-    val personIcon = Icons.Filled.Person
-    val moreVertIcon = Icons.Filled.MoreVert
-
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent
@@ -58,7 +53,7 @@ fun AppBar(screenCheck: String, noticeCheck: Boolean, studyTitle: String) {
                         Spacer(modifier = Modifier.weight(1f))
 
                         Box {
-                            customIconButton(notificationsIcon, "notifications")
+                            CustomIconButton(notificationsIcon, "notifications")
                             if (noticeCheck)
                                 Box(
                                     modifier = Modifier
@@ -69,14 +64,14 @@ fun AppBar(screenCheck: String, noticeCheck: Boolean, studyTitle: String) {
                         }
                         Spacer(Modifier.width(12.dp))
 
-                        customIconButton(personIcon, "person")
+                        CustomIconButton(personIcon, "person")
                     }
 
                     "StudyHome" -> {
                         Text(text = studyTitle, style = title4_sb24, color = MainWhite)
                         Spacer(modifier = Modifier.weight(1f))
 
-                        customIconButton(moreVertIcon, "moreVert")
+                        CustomIconButton(moreVertIcon, "moreVert")
                     }
                 }
                 Spacer(Modifier.width(28.dp))
@@ -86,10 +81,10 @@ fun AppBar(screenCheck: String, noticeCheck: Boolean, studyTitle: String) {
 }
 
 @Composable
-fun customIconButton(icon: ImageVector, iconString: String) {
+fun CustomIconButton(icon: ImageVector, iconString: String) {
     Icon(
         imageVector = icon,
-        contentDescription = "$icon",
+        contentDescription = iconString,
         modifier = Modifier
             .size(20.dp)
             .clickable(

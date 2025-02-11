@@ -1,6 +1,9 @@
 package com.example.bbip_clone.network
 
 import com.example.bbip_clone.model.StudyWeekData
+import com.example.bbip_clone.model.WeekDate
+
+// 네트워크 예시 데이터
 
 fun getNotionCheck(id: Boolean): Boolean {
     return id
@@ -8,6 +11,10 @@ fun getNotionCheck(id: Boolean): Boolean {
 
 fun getStudyTitle(id: String): String {
     return "TOEIC / IELTS 스터디"
+}
+
+fun getWeekData(thisWeek: String): WeekDate {
+    return WeekDate("12:00", "18:00", "스타벅스 강남역")
 }
 
 fun getStudyWeekData(): List<StudyWeekData> {

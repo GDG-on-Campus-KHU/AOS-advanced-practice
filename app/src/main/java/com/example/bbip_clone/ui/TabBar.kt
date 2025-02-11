@@ -10,9 +10,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
@@ -35,11 +32,13 @@ import com.example.bbip_clone.R
 import com.example.bbip_clone.ui.theme.Gray4
 import com.example.bbip_clone.ui.theme.MainBlack
 import com.example.bbip_clone.ui.theme.MainWhite
+import com.example.bbip_clone.ui.theme.dateRangeIcon
+import com.example.bbip_clone.ui.theme.homeIcon
 
 @SuppressLint("UnrememberedMutableInteractionSource", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun TabScreen(navController: NavController) {
-    val tabs = listOf(Icons.Filled.Home, Icons.Filled.DateRange)
+    val tabs = listOf(homeIcon, dateRangeIcon)
     var pagerState by remember { mutableIntStateOf(0) }
 
     Scaffold(
