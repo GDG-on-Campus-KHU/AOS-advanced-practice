@@ -262,8 +262,21 @@ fun StudyHomeScreen(navController: NavController) {
                     WeekActivityCard(activity, thisWeekRound)
                 }
 
+                Spacer(Modifier.height(23.dp))
                 Text(
+                    modifier = Modifier.padding(start = 12.dp),
+                    text = studyMembers,
+                    style = body1_b16
                 )
+                Spacer(modifier = Modifier.height(12.dp))
+                LazyRow {
+                    items(getTeamMember("id")) { member ->
+                        TeamMemberCard(member)
+                    }
+                    item {
+                        InviteButton()
+                    }
+                }
             }
         }
     }
