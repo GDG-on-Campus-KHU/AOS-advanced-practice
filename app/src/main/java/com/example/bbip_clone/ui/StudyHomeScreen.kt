@@ -1,5 +1,8 @@
 package com.example.bbip_clone.ui
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -204,35 +207,50 @@ fun StudyHomeScreen(navController: NavController) {
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Box(modifier = Modifier.fillMaxWidth()) {
-                        val thisWeekRoundFloat = thisWeekRound.toFloatOrNull() ?: 0f
-                        val studyLastRoundFloat = studyLastRound.toFloatOrNull() ?: 1f
-                        LinearProgressIndicator(
-                            progress = { thisWeekRoundFloat / studyLastRoundFloat },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(7.dp)
-                                .clip(RoundedCornerShape(15.dp))
-                                .align(Alignment.Center),
-                            color = PrimaryDark,
-                            trackColor = Gray2,
-                        )
-                        Row {
-                            if (thisWeekRoundFloat != 0f) {
-                                Spacer(Modifier.weight(thisWeekRoundFloat))
-                                Box(
-                                    modifier = Modifier
-                                        .size(12.dp)
-                                        .clip(CircleShape)
-                                        .background(PrimaryDark)
-                                )
-                                if ((studyLastRoundFloat - thisWeekRoundFloat) != 0f)
-                                    Spacer(Modifier.weight(studyLastRoundFloat - thisWeekRoundFloat))
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Box(modifier = Modifier.fillMaxWidth()) {
+                            val studyLastRoundFloat = studyLastRound.toFloatOrNull() ?: 1f
+                            val animatedProgress by animateFloatAsState(
+                                targetValue = thisWeekRoundFloat,
+                                animationSpec = tween(
+                                    durationMillis = if (isRefreshing) 0 else 1000,
+                                    easing = FastOutSlowInEasing
+                                ),
+                                label = "progress"
+                            )
+                            LinearProgressIndicator(
+                                progress = { animatedProgress / studyLastRoundFloat },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 3.dp, bottom = 3.dp)
+                                    .height(7.dp)
+                                    .clip(RoundedCornerShape(15.dp))
+                                    .align(Alignment.Center),
+                                color = PrimaryDark,
+                                trackColor = Gray2,
+                            )
+                            Row {
+                                if (thisWeekRoundFloat != 0f) {
+                                    Spacer(Modifier.weight(maxOf(animatedProgress, 0.0001f)))
+                                    Box(
+                                        modifier = Modifier
+                                            .size(12.dp)
+                                            .clip(CircleShape)
+                                            .background(PrimaryDark)
+                                    )
+                                    if ((studyLastRoundFloat - thisWeekRoundFloat) != 0f)
+                                        Spacer(
+                                            Modifier.weight(
+                                                maxOf(
+                                                    studyLastRoundFloat - animatedProgress,
+                                                    0.0001f
+                                                )
+                                            )
+                                        )
+                                }
                             }
                         }
                     }
-                }
 
                 Spacer(Modifier.height(23.dp))
                 Row(
