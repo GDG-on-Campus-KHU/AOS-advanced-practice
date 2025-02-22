@@ -1,6 +1,7 @@
 package com.example.bbip_clone.ui.theme
 
 const val home = "홈"
+const val notice = "공지"
 const val allView = "전체보기"
 const val board = "게시판"
 const val weekStudy = "이번 주 스터디"
