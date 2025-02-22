@@ -234,6 +234,7 @@ fun InviteButton() {
     }
 }
 
+
 @Composable
 fun NoticeBar(
     noticeText: String,
@@ -246,7 +247,7 @@ fun NoticeBar(
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .padding(vertical = 22.dp)
-            .background(backgroundColor, shape = RoundedCornerShape(12.dp)) // 🔹 배경색 설정 가능
+            .background(backgroundColor, shape = RoundedCornerShape(12.dp))
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
