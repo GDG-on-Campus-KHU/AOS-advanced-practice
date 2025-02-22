@@ -35,6 +35,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.network.getNotice
 import com.example.bbip_clone.network.getNotionCheck
 import com.example.bbip_clone.ui.theme.Gray2
+import com.example.bbip_clone.ui.theme.Gray8
+import com.example.bbip_clone.ui.theme.PrimaryDark
 import com.example.bbip_clone.ui.theme.body1_sb16
 import com.example.bbip_clone.ui.theme.body2_m14
 import com.example.bbip_clone.ui.theme.notice
@@ -75,26 +77,27 @@ fun UserHomeScreen(navController: NavController) {
                     Text(
                         text = notice,
                         style = body1_sb16,
-                        color = Color.Red,
+                        color = PrimaryDark,
                         modifier = Modifier
-                            .padding(horizontal = 8.dp, vertical = 4.dp)
+                            .padding(horizontal = 8.dp, vertical = 2.5.dp)
                     )
 
                     if (noticeCheck) {
                         Box(
                             modifier = Modifier
                                 .size(4.dp)
-                                .background(Color.Red, CircleShape)
+                                .background(PrimaryDark, CircleShape)
                                 .align(Alignment.TopEnd)
                         )
                     }
                 }
 
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
                 Text(
                     text = noticeData,
-                    style = body2_m14
+                    style = body2_m14,
+                    color = Gray8
                 )
             }
 

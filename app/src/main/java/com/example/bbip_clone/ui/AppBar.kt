@@ -29,6 +29,7 @@ import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray9
 import com.example.bbip_clone.ui.theme.MainBlack
 import com.example.bbip_clone.ui.theme.MainWhite
+import com.example.bbip_clone.ui.theme.PrimaryDark
 import com.example.bbip_clone.ui.theme.home
 import com.example.bbip_clone.ui.theme.moreVertIcon
 import com.example.bbip_clone.ui.theme.notificationsIcon
@@ -63,7 +64,7 @@ fun AppBar(screenCheck: String, noticeCheck: Boolean, studyTitle: String) {
                                 Box(
                                     modifier = Modifier
                                         .size(4.dp)
-                                        .background(Color.Red, CircleShape)
+                                        .background(PrimaryDark, CircleShape)
                                         .align(Alignment.TopEnd)
                                 )
                         }
