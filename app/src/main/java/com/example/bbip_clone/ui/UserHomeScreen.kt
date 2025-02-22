@@ -1,6 +1,8 @@
 package com.example.bbip_clone.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -80,6 +83,15 @@ fun UserHomeScreen(navController: NavController) {
                         color = PrimaryDark,
                         modifier = Modifier
                             .padding(horizontal = 8.dp, vertical = 2.5.dp)
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = rememberRipple(
+                                    bounded = false,
+                                    radius = 14.dp,
+                                    color = PrimaryDark
+                                ),
+                                onClick = {}
+                            )
                     )
 
                     if (noticeCheck) {
