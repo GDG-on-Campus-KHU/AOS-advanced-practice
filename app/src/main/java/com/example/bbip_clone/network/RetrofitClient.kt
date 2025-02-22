@@ -1,6 +1,7 @@
 package com.example.bbip_clone.network
 
 import com.example.bbip_clone.R
+import com.example.bbip_clone.model.StudySummaryData
 import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.model.TeamMember
 import com.example.bbip_clone.model.WeekDate
@@ -45,6 +46,17 @@ fun getTeamMember(id: String): List<TeamMember> {
 
     return teamMembers
 }
-fun getNotice(id: String): String{
+
+fun getNotice(id: String): String {
     return "다음주 스터디 하루 쉬어갑니다! 확인 해주세요...!"
+}
+
+
+fun getStudySummaryData(): List<StudySummaryData> {
+    val studySummaryDataList = mutableListOf<StudySummaryData>()
+
+    studySummaryDataList.add(StudySummaryData("TOEIC / IELTS", "18:00", "20:00", "예대 4층", true))
+    studySummaryDataList.add(StudySummaryData("JLPT N2 대비 청해 스터디", "09:00", "11:00", "전정대 2층", false))
+    studySummaryDataList.add(StudySummaryData("코틀린 스터디", "19:00", "21:00", "도서관 2층", false))
+    return studySummaryDataList
 }
