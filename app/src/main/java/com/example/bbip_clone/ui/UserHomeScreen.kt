@@ -40,6 +40,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.network.getNotice
 import com.example.bbip_clone.network.getNotionCheck
 import com.example.bbip_clone.network.getStudySummaryData
+import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray2
 import com.example.bbip_clone.ui.theme.Gray5
 import com.example.bbip_clone.ui.theme.Gray6
@@ -72,6 +73,7 @@ fun UserHomeScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
+                .background(Gray1)
         ) {
             HorizontalDivider()
             NoticeBar(
