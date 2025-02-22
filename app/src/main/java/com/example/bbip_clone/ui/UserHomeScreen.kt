@@ -38,6 +38,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.network.getNotice
 import com.example.bbip_clone.network.getNotionCheck
 import com.example.bbip_clone.ui.theme.Gray2
+import com.example.bbip_clone.ui.theme.Gray6
 import com.example.bbip_clone.ui.theme.Gray8
 import com.example.bbip_clone.ui.theme.PrimaryDark
 import com.example.bbip_clone.ui.theme.body1_sb16
@@ -47,11 +48,11 @@ import com.example.bbip_clone.ui.theme.notice
 @Composable
 fun UserHomeScreen(navController: NavController) {
     var noticeCheck by remember { mutableStateOf(false) }
-    var noticeData by remember { mutableStateOf("") }
+    var noticeText by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         noticeCheck = getNotionCheck(true)
-        noticeData = getNotice("id")
+        noticeText = getNotice("id")
 
     }
 
@@ -64,60 +65,15 @@ fun UserHomeScreen(navController: NavController) {
                 .padding(it)
         ) {
             HorizontalDivider()
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .padding(vertical = 22.dp)
-                    .background(Gray2, shape = RoundedCornerShape(12.dp))
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier.wrapContentSize(),
-                    contentAlignment = Alignment.TopEnd
-                ) {
-                    Text(
-                        text = notice,
-                        style = body1_sb16,
-                        color = PrimaryDark,
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp, vertical = 2.5.dp)
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = rememberRipple(
-                                    bounded = false,
-                                    radius = 14.dp,
-                                    color = PrimaryDark
-                                ),
-                                onClick = {}
-                            )
-                    )
-
-                    if (noticeCheck) {
-                        Box(
-                            modifier = Modifier
-                                .size(4.dp)
-                                .background(PrimaryDark, CircleShape)
-                                .align(Alignment.TopEnd)
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.width(16.dp))
-
-                Text(
-                    text = noticeData,
-                    style = body2_m14,
-                    color = Gray8
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
+            NoticeBar(
+                noticeText = noticeText,
+                noticeCheck = noticeCheck
+            )
         }
+
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun UserHomePreview() {
