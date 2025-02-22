@@ -1,6 +1,7 @@
 package com.example.bbip_clone.ui
 
 import android.util.Log
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -27,7 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -288,6 +291,30 @@ fun NoticeBar(
             text = noticeText,
             style = body2_m14,
             color = contentColor
+        )
+    }
+}
+@Composable
+fun TimeRing(modifier: Modifier = Modifier) {
+    Canvas(
+        modifier = modifier
+    ) {
+        val outCircleRadius = size.width / 2
+        val inCircleRadius = outCircleRadius * 0.83f
+        val strokeWidth = outCircleRadius * 0.08f
+        val center = Offset(size.width / 2, size.height / 2)
+
+        drawCircle(
+            color = Gray8,
+            center = center,
+            radius = outCircleRadius
+        )
+
+        drawCircle(
+            color = Gray5,
+            center = center,
+            radius = inCircleRadius,
+            style = Stroke(width = strokeWidth)
         )
     }
 }

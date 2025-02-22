@@ -69,9 +69,16 @@ fun UserHomeScreen(navController: NavController) {
                 noticeText = noticeText,
                 noticeCheck = noticeCheck
             )
+            Spacer(modifier = Modifier.height(13.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 60.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                TimeRing(modifier = Modifier.size(273.dp))
+            }
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 @Preview(showBackground = true)
