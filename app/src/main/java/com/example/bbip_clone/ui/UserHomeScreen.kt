@@ -71,12 +71,10 @@ fun UserHomeScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(13.dp))
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 60.dp),
+                modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                TimeRing(modifier = Modifier.size(273.dp))
+                TimeRing()
             }
         }
     }

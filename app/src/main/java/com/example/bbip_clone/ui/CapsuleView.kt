@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -298,6 +299,9 @@ fun NoticeBar(
 fun TimeRing(modifier: Modifier = Modifier) {
     Canvas(
         modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 60.dp)
+            .aspectRatio(1f) // 정사각형으로
     ) {
         val outCircleRadius = size.width / 2
         val inCircleRadius = outCircleRadius * 0.83f
