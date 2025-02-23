@@ -1,6 +1,7 @@
 package com.example.bbip_clone.ui
 
 import android.util.Log
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -27,7 +29,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -289,5 +293,44 @@ fun NoticeBar(
             style = body2_m14,
             color = contentColor
         )
+    }
+}
+@Composable
+fun TimeRing(modifier: Modifier = Modifier, progressRatio: Float) {
+    Canvas(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 60.dp)
+            .aspectRatio(1f)
+    ) {
+        val outCircleRadius = size.width / 2
+        val inCircleRadius = outCircleRadius * 0.83f
+        val strokeWidth = outCircleRadius * 0.08f
+        val center = Offset(size.width / 2, size.height / 2)
+
+        drawCircle(
+            color = Gray8,
+            center = center,
+            radius = outCircleRadius
+        )
+
+        drawCircle(
+            color = Gray5,
+            center = center,
+            radius = inCircleRadius,
+            style = Stroke(width = strokeWidth)
+        )
+        if (progressRatio in 0f..100f) {
+            val progressColor = if (progressRatio == 100f) Gray5 else PrimaryDark
+            drawArc(
+                color = progressColor,
+                startAngle = -90f,
+                sweepAngle = 360 * (progressRatio / 100f),
+                useCenter = false,
+                topLeft = Offset(center.x - inCircleRadius, center.y - inCircleRadius),
+                size = androidx.compose.ui.geometry.Size(inCircleRadius * 2, inCircleRadius * 2),
+                style = Stroke(width = strokeWidth)
+            )
+        }
     }
 }
