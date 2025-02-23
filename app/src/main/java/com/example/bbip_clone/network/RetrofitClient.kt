@@ -45,3 +45,6 @@ fun getTeamMember(id: String): List<TeamMember> {
 
     return teamMembers
 }
+fun getNotice(id: String): String{
+    return "다음주 스터디 하루 쉬어갑니다! 확인 해주세요...!"
+}

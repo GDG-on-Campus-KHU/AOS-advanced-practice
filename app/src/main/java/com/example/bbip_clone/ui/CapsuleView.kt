@@ -41,6 +41,7 @@ import com.example.bbip_clone.ui.theme.Gray3
 import com.example.bbip_clone.ui.theme.Gray5
 import com.example.bbip_clone.ui.theme.Gray6
 import com.example.bbip_clone.ui.theme.Gray7
+import com.example.bbip_clone.ui.theme.Gray8
 import com.example.bbip_clone.ui.theme.MainBlack
 import com.example.bbip_clone.ui.theme.MainWhite
 import com.example.bbip_clone.ui.theme.PrimaryDark
@@ -229,6 +230,64 @@ fun InviteButton() {
             text = invite,
             style = body2_m14,
             color = Gray7
+        )
+    }
+}
+
+
+@Composable
+fun NoticeBar(
+    noticeText: String,
+    noticeCheck: Boolean,
+    contentColor: Color = Gray8,
+    backgroundColor: Color = Gray2
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+            .padding(vertical = 22.dp)
+            .background(backgroundColor, shape = RoundedCornerShape(12.dp))
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier.wrapContentSize(),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            Text(
+                text = "공지",
+                style = body1_sb16,
+                color = PrimaryDark,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 2.5.dp)
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = rememberRipple(
+                            bounded = false,
+                            radius = 14.dp,
+                            color = PrimaryDark
+                        ),
+                        onClick = {}
+                    )
+            )
+
+            if (noticeCheck) {
+                Box(
+                    modifier = Modifier
+                        .size(4.dp)
+                        .background(PrimaryDark, CircleShape)
+                        .align(Alignment.TopEnd)
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Text(
+            text = noticeText,
+            style = body2_m14,
+            color = contentColor
         )
     }
 }
