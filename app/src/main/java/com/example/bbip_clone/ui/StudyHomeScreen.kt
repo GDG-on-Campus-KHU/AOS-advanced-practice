@@ -1,5 +1,8 @@
 package com.example.bbip_clone.ui
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +22,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
@@ -26,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,6 +45,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
@@ -71,7 +80,12 @@ import com.example.bbip_clone.ui.theme.progress
 import com.example.bbip_clone.ui.theme.studyMembers
 import com.example.bbip_clone.ui.theme.title3_sb20
 import com.example.bbip_clone.ui.theme.weekActivities
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun StudyHomeScreen(navController: NavController) {
     var studyTitle by remember { mutableStateOf("") }
@@ -84,18 +98,19 @@ fun StudyHomeScreen(navController: NavController) {
     var lastWeekDate by remember { mutableStateOf("") }
     var thisWeekDateFormatted by remember { mutableStateOf("") }
     var thisWeekLocation by remember { mutableStateOf("") }
+    var thisWeekRoundFloat by remember { mutableFloatStateOf(0f) }
+    var isRefreshing by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
+    fun fetchData() {
         studyTitle = getStudyTitle("id")
         studyData = getStudyWeekData("id")
-        studyLastRound = studyData.size.toString()
-        lastWeekDate = studyData.last().date
         studyData.firstOrNull { it.date > convertTodayDate() }?.let {
             thisWeekRound = it.round
             thisWeekContent = it.content
             thisWeekDate = it.date
         }
         studyLastRound = studyData.last().round
+        lastWeekDate = studyData.last().date
         getWeekData(thisWeekRound).let {
             thisWeekDateFormatted =
                 "${convertNumberToDate(thisWeekDate)} / ${it.startTime} ~ ${it.endTime}"
@@ -104,12 +119,37 @@ fun StudyHomeScreen(navController: NavController) {
         }
     }
 
+    LaunchedEffect(Unit) {
+        fetchData()
+        thisWeekRoundFloat = thisWeekRound.toFloatOrNull() ?: 0f
+    }
+
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
+        onRefresh = {
+            CoroutineScope(Dispatchers.IO).launch {
+                isRefreshing = true
+                thisWeekRoundFloat = 0f
+                fetchData()
+                // API 요청 예시 delay
+                delay(2000)
+                isRefreshing = false
+                thisWeekRoundFloat = thisWeekRound.toFloatOrNull() ?: 0f
+            }
+        },
+        refreshThreshold = 50.dp,
+        refreshingOffset = 50.dp
+    )
+
     Scaffold(
-        topBar = { AppBar("StudyHome", false, studyTitle) }
+        topBar = { AppBar("StudyHome", false, studyTitle) },
+        modifier = Modifier.pullRefresh(pullRefreshState),
     ) {
         Box(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
+                .background(Gray9)
+                .padding(top = (pullRefreshState.progress) * 80.dp)
                 .background(Gray1)
                 .padding(bottom = 200.dp)
         ) {
@@ -157,8 +197,10 @@ fun StudyHomeScreen(navController: NavController) {
 
                 Spacer(Modifier.height(225.dp))
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 34.dp, end = 34.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     StudyOptions(R.drawable.attendance_certification, certification)
                     StudyOptions(R.drawable.check_location, place)
@@ -206,12 +248,20 @@ fun StudyHomeScreen(navController: NavController) {
 
                     Spacer(modifier = Modifier.height(12.dp))
                     Box(modifier = Modifier.fillMaxWidth()) {
-                        val thisWeekRoundFloat = thisWeekRound.toFloatOrNull() ?: 0f
                         val studyLastRoundFloat = studyLastRound.toFloatOrNull() ?: 1f
+                        val animatedProgress by animateFloatAsState(
+                            targetValue = thisWeekRoundFloat,
+                            animationSpec = tween(
+                                durationMillis = if (isRefreshing) 0 else 1000,
+                                easing = FastOutSlowInEasing
+                            ),
+                            label = "progress"
+                        )
                         LinearProgressIndicator(
-                            progress = { thisWeekRoundFloat / studyLastRoundFloat },
+                            progress = { animatedProgress / studyLastRoundFloat },
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .padding(top = 3.dp, bottom = 3.dp)
                                 .height(7.dp)
                                 .clip(RoundedCornerShape(15.dp))
                                 .align(Alignment.Center),
@@ -220,7 +270,7 @@ fun StudyHomeScreen(navController: NavController) {
                         )
                         Row {
                             if (thisWeekRoundFloat != 0f) {
-                                Spacer(Modifier.weight(thisWeekRoundFloat))
+                                Spacer(Modifier.weight(maxOf(animatedProgress, 0.0001f)))
                                 Box(
                                     modifier = Modifier
                                         .size(12.dp)
@@ -228,7 +278,14 @@ fun StudyHomeScreen(navController: NavController) {
                                         .background(PrimaryDark)
                                 )
                                 if ((studyLastRoundFloat - thisWeekRoundFloat) != 0f)
-                                    Spacer(Modifier.weight(studyLastRoundFloat - thisWeekRoundFloat))
+                                    Spacer(
+                                        Modifier.weight(
+                                            maxOf(
+                                                studyLastRoundFloat - animatedProgress,
+                                                0.0001f
+                                            )
+                                        )
+                                    )
                             }
                         }
                     }
@@ -258,9 +315,8 @@ fun StudyHomeScreen(navController: NavController) {
                     )
                 }
                 Spacer(Modifier.height(14.dp))
-                studyData.drop((thisWeekRound.toIntOrNull() ?: 1) - 1).take(2).forEach { activity ->
-                    WeekActivityCard(activity, thisWeekRound)
-                }
+                studyData.drop((thisWeekRound.toIntOrNull() ?: 1) - 1).take(3)
+                    .forEach { activity -> WeekActivityCard(activity, thisWeekRound) }
 
                 Spacer(Modifier.height(23.dp))
                 Text(
@@ -278,6 +334,18 @@ fun StudyHomeScreen(navController: NavController) {
                     }
                 }
             }
+        }
+
+        Box(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxWidth()
+        ) {
+            PullRefreshIndicator(
+                refreshing = isRefreshing,
+                state = pullRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
         }
     }
 }
