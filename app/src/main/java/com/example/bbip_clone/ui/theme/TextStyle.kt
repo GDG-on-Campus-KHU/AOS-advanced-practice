@@ -135,3 +135,10 @@ val caption2_m12 = TextStyle(
     textAlign = TextAlign.Center,
     letterSpacing = 0.01.em
 )
+val caption3_r12 = TextStyle(
+    fontFamily = wantedSans,
+    fontWeight = FontWeight.W400,
+    fontSize = 12.sp,
+    lineHeight = 17.sp,
+    textAlign = TextAlign.Center
+)
