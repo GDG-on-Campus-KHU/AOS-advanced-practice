@@ -64,7 +64,7 @@ fun getStudySummaryData(): List<StudySummaryData> {
 fun getBulletinBoardData(): List<BulletinBoardData> {
     val bulletinBoardDataList = mutableListOf<BulletinBoardData>()
 
-    bulletinBoardDataList.add(BulletinBoardData(studyTitle = "포트폴리오 스터디", content = "오늘 스터디는 강서구 카페베네에서 진행합니다...", writeTime = "1시간 전", isNotice = true))
+    bulletinBoardDataList.add(BulletinBoardData(studyTitle = "포트폴리오 스터디", content = "오늘 스터디는 강서구 카페베네에서 진행합니달라...", writeTime = "1시간 전", isNotice = true))
     bulletinBoardDataList.add(BulletinBoardData(studyTitle = "JLPT N2 청해 스터디", content = "이거 문제 어우에에ㅜㅇㅇ 못 풀겠져엉 오ㅜㅇ애...", writeTime = "1일 전", round = "7주차"))
     bulletinBoardDataList.add(BulletinBoardData(studyTitle = "JLPT N2 청해 스터디", content = "이거 문제 어우에에ㅜㅇㅇ 못 풀겠져엉 오ㅜㅇ애...", writeTime = "2일 전", round = "8주차"))
 

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -35,9 +36,11 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.bbip_clone.convertNumberToDate
+import com.example.bbip_clone.model.BulletinBoardData
 import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.model.TeamMember
 import com.example.bbip_clone.ui.theme.Gray2
@@ -55,9 +58,11 @@ import com.example.bbip_clone.ui.theme.body1_sb16
 import com.example.bbip_clone.ui.theme.body2_m14
 import com.example.bbip_clone.ui.theme.button2_m16
 import com.example.bbip_clone.ui.theme.caption2_m12
+import com.example.bbip_clone.ui.theme.caption3_r12
 import com.example.bbip_clone.ui.theme.certification
 import com.example.bbip_clone.ui.theme.emptyContent
 import com.example.bbip_clone.ui.theme.invite
+import com.example.bbip_clone.ui.theme.notice
 import com.example.bbip_clone.ui.theme.place
 
 @Composable
@@ -334,3 +339,103 @@ fun TimeRing(modifier: Modifier = Modifier, progressRatio: Float) {
         }
     }
 }
+
+@Composable
+fun BulletinCard(//studyHomeScreen에서 사용할 경우 isStudyHomeScreen변수를 true로 파라미터 설정
+    data: BulletinBoardData,
+    isStudyHomeScreen: Boolean = false,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .size(171.dp, 115.dp)
+            .background(color = MainWhite, shape = RoundedCornerShape(12.dp))
+            .clickable {}
+            .padding(13.dp)
+    ) {
+        if (data.isNotice && !isStudyHomeScreen) {
+            Box(
+                modifier = Modifier
+                    .border(width = 1.dp, color = PrimaryDark, shape = RoundedCornerShape(10.dp))
+                    .background(MainWhite, shape = RoundedCornerShape(10.dp))
+            ) {
+                Text(
+                    text = data.studyTitle,
+                    color = PrimaryDark,
+                    style = caption2_m12,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+
+                )
+            }
+        } else if (data.isNotice && isStudyHomeScreen) {
+            Box(
+                modifier = Modifier
+                    .border(width = 1.dp, color = PrimaryDark, shape = RoundedCornerShape(10.dp))
+                    .background(MainWhite, shape = RoundedCornerShape(10.dp))
+            ) {
+                Text(
+                    text = notice,
+                    color = PrimaryDark,
+                    style = caption2_m12,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+
+                )
+            }
+        } else if (!data.isNotice && !isStudyHomeScreen) {
+            Box(
+                modifier = Modifier
+                    .border(width = 1.dp, color = Gray7, shape = RoundedCornerShape(10.dp))
+                    .background(MainWhite, shape = RoundedCornerShape(10.dp))
+            ) {
+                Text(
+                    text = data.studyTitle,
+                    color = Gray8,
+                    style = caption2_m12,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+
+                )
+            }
+        } else {//!data.isNotice && isStudyHomeScreen
+            Box(
+                modifier = Modifier
+                    .border(width = 1.dp, color = Gray2, shape = RoundedCornerShape(10.dp))
+                    .background(Gray2, shape = RoundedCornerShape(10.dp))
+            ) {
+                Text(
+                    text = data.round!!,
+                    color = Gray8,
+                    style = caption2_m12,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = data.content,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            style = body2_m14,
+            color = Gray8,
+            textAlign = TextAlign.Start
+        )
+
+        Spacer(modifier = Modifier.height(7.dp))
+        Text(
+            text = data.writeTime,
+            style = caption3_r12,
+            color = Gray6,
+            modifier = Modifier.align(Alignment.End)
+        )
+    }
+}
+
