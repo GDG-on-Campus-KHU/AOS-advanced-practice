@@ -38,6 +38,7 @@ import com.example.bbip_clone.ui.theme.Gray5
 import com.example.bbip_clone.ui.theme.Gray8
 import com.example.bbip_clone.ui.theme.MainWhite
 import com.example.bbip_clone.ui.theme.PrimaryDark
+import com.example.bbip_clone.ui.theme.attendanceCertification
 import com.example.bbip_clone.ui.theme.body1_sb16
 import com.example.bbip_clone.ui.theme.body2_m14
 import com.example.bbip_clone.ui.theme.caption2_m12
@@ -160,7 +161,7 @@ fun UserHomeScreen(navController: NavController) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "출석인증",
+                    text = attendanceCertification,
                     style = body1_sb16,
                     color = if (isInStudyTime && !isAttendanceCheck) MainWhite else Gray5
                 )
