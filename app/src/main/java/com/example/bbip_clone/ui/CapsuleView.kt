@@ -296,12 +296,12 @@ fun NoticeBar(
     }
 }
 @Composable
-fun TimeRing(modifier: Modifier = Modifier) {
+fun TimeRing(modifier: Modifier = Modifier, progressRatio: Float) {
     Canvas(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 60.dp)
-            .aspectRatio(1f) // 정사각형으로
+            .aspectRatio(1f)
     ) {
         val outCircleRadius = size.width / 2
         val inCircleRadius = outCircleRadius * 0.83f
@@ -320,5 +320,17 @@ fun TimeRing(modifier: Modifier = Modifier) {
             radius = inCircleRadius,
             style = Stroke(width = strokeWidth)
         )
+        if (progressRatio in 0f..100f) {
+            val progressColor = if (progressRatio == 100f) Gray5 else PrimaryDark
+            drawArc(
+                color = progressColor,
+                startAngle = -90f,
+                sweepAngle = 360 * (progressRatio / 100f),
+                useCenter = false,
+                topLeft = Offset(center.x - inCircleRadius, center.y - inCircleRadius),
+                size = androidx.compose.ui.geometry.Size(inCircleRadius * 2, inCircleRadius * 2),
+                style = Stroke(width = strokeWidth)
+            )
+        }
     }
 }

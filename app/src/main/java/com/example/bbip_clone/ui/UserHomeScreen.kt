@@ -62,9 +62,20 @@ fun UserHomeScreen(navController: NavController) {
     val studySummaryDataList = remember { getStudySummaryData() }
     val todayStudy = studySummaryDataList.firstOrNull { it.isToday }
 
+    var progressRatio by remember { mutableStateOf(0f) }
+
     LaunchedEffect(Unit) {
         noticeCheck = getNotionCheck(true)
         noticeText = getNotice("id")
+    }
+
+    LaunchedEffect(todayStudy) {
+        while (true) {
+            todayStudy?.let { study ->
+                progressRatio = calculateProgressRatio(study.startTime, study.endTime)
+            }
+            kotlinx.coroutines.delay(1000L)
+        }
     }
 
     Scaffold(
@@ -88,7 +99,8 @@ fun UserHomeScreen(navController: NavController) {
                 contentAlignment = Alignment.Center
             ) {
                 TimeRing(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    progressRatio = progressRatio
                 )
 
                 todayStudy?.let { study ->
@@ -119,7 +131,7 @@ fun UserHomeScreen(navController: NavController) {
                             textAlign = TextAlign.Center,
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.fillMaxWidth(0.55f) // 더 좋은 대안?
+                            modifier = Modifier.fillMaxWidth(0.55f)
                         )
 
                         Spacer(modifier = Modifier.height(12.dp))
