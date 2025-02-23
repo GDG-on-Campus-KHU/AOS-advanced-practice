@@ -341,7 +341,7 @@ fun TimeRing(modifier: Modifier = Modifier, progressRatio: Float) {
 }
 
 @Composable
-fun BulletinCard(//studyHomeScreen에서 사용할 경우 isStudyHomeScreen변수를 true로 파라미터 설정
+fun BulletinCard(
     data: BulletinBoardData,
     isStudyHomeScreen: Boolean = false,
     modifier: Modifier = Modifier
@@ -353,73 +353,35 @@ fun BulletinCard(//studyHomeScreen에서 사용할 경우 isStudyHomeScreen변�
             .clickable {}
             .padding(13.dp)
     ) {
-        if (data.isNotice && !isStudyHomeScreen) {
-            Box(
-                modifier = Modifier
-                    .border(width = 1.dp, color = PrimaryDark, shape = RoundedCornerShape(10.dp))
-                    .background(MainWhite, shape = RoundedCornerShape(10.dp))
-            ) {
-                Text(
-                    text = data.studyTitle,
-                    color = PrimaryDark,
-                    style = caption2_m12,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-
-                )
-            }
-        } else if (data.isNotice && isStudyHomeScreen) {
-            Box(
-                modifier = Modifier
-                    .border(width = 1.dp, color = PrimaryDark, shape = RoundedCornerShape(10.dp))
-                    .background(MainWhite, shape = RoundedCornerShape(10.dp))
-            ) {
-                Text(
-                    text = notice,
-                    color = PrimaryDark,
-                    style = caption2_m12,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-
-                )
-            }
-        } else if (!data.isNotice && !isStudyHomeScreen) {
-            Box(
-                modifier = Modifier
-                    .border(width = 1.dp, color = Gray7, shape = RoundedCornerShape(10.dp))
-                    .background(MainWhite, shape = RoundedCornerShape(10.dp))
-            ) {
-                Text(
-                    text = data.studyTitle,
-                    color = Gray8,
-                    style = caption2_m12,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-
-                )
-            }
-        } else {//!data.isNotice && isStudyHomeScreen
-            Box(
-                modifier = Modifier
-                    .border(width = 1.dp, color = Gray2, shape = RoundedCornerShape(10.dp))
-                    .background(Gray2, shape = RoundedCornerShape(10.dp))
-            ) {
-                Text(
-                    text = data.round!!,
-                    color = Gray8,
-                    style = caption2_m12,
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-
-                )
-            }
+        val borderColor = when {
+            data.isNotice && !isStudyHomeScreen -> PrimaryDark
+            data.isNotice && isStudyHomeScreen -> PrimaryDark
+            !data.isNotice && !isStudyHomeScreen -> Gray7
+            else -> Gray2
         }
-        Spacer(modifier = Modifier.height(12.dp))
+        val backgroundColor = if (!data.isNotice && isStudyHomeScreen) Gray2 else MainWhite
+        val text = when {
+            data.isNotice && isStudyHomeScreen -> notice
+            !data.isNotice && isStudyHomeScreen -> data.round!!
+            else -> data.studyTitle
+        }
 
+        Box(
+            modifier = Modifier
+                .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
+                .background(backgroundColor, shape = RoundedCornerShape(10.dp))
+        ) {
+            Text(
+                text = text,
+                color = if (!data.isNotice) Gray8 else PrimaryDark,
+                style = caption2_m12,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = data.content,
             maxLines = 2,
@@ -428,7 +390,6 @@ fun BulletinCard(//studyHomeScreen에서 사용할 경우 isStudyHomeScreen변�
             color = Gray8,
             textAlign = TextAlign.Start
         )
-
         Spacer(modifier = Modifier.height(7.dp))
         Text(
             text = data.writeTime,
@@ -438,4 +399,3 @@ fun BulletinCard(//studyHomeScreen에서 사용할 경우 isStudyHomeScreen변�
         )
     }
 }
-
