@@ -5,6 +5,7 @@ import com.example.bbip_clone.model.BulletinBoardData
 import com.example.bbip_clone.model.StudySummaryData
 import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.model.TeamMember
+import com.example.bbip_clone.model.ThisWeekStudyData
 import com.example.bbip_clone.model.WeekDate
 
 // 네트워크 예시 데이터
@@ -69,4 +70,13 @@ fun getBulletinBoardData(): List<BulletinBoardData> {
     bulletinBoardDataList.add(BulletinBoardData(studyTitle = "JLPT N2 청해 스터디", content = "이거 문제 어우에에ㅜㅇㅇ 못 풀겠져엉 오ㅜㅇ애...", writeTime = "2일 전", round = "8주차"))
 
     return bulletinBoardDataList
+}
+fun getStudyWeekData(): List<ThisWeekStudyData> {
+    val studyWeekDataList = mutableListOf<ThisWeekStudyData>()
+
+    studyWeekDataList.add(ThisWeekStudyData("JLPT N2 청해 스터디", "6R", "어학", "단어 시험, 교재 300~320p", "8월 13일", "12:00", "15:00", "미정"))
+    studyWeekDataList.add(ThisWeekStudyData("JLPT N2 청해 스터디", "8R", "어학", "2차 과제 제출 확인 및 피드백", "8월 9일", "15:00", "18:00", "비대면(디코)"))
+    studyWeekDataList.add(ThisWeekStudyData("JLPT N2 청해 스터디", "3R", "어학", "단어 시험, 교재 300~320p", "8월 14일", "12:00", "18:00", "스타벅스 강남역점"))
+
+    return studyWeekDataList
 }
