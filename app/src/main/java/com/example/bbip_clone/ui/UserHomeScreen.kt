@@ -42,6 +42,7 @@ import com.example.bbip_clone.network.getNotionCheck
 import com.example.bbip_clone.network.getStudySummaryData
 import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray2
+import com.example.bbip_clone.ui.theme.Gray3
 import com.example.bbip_clone.ui.theme.Gray5
 import com.example.bbip_clone.ui.theme.Gray6
 import com.example.bbip_clone.ui.theme.Gray8
@@ -138,6 +139,21 @@ fun UserHomeScreen(navController: NavController) {
                         )
                     }
                 }
+            }
+            Spacer(modifier = Modifier.height(24.dp))
+            Box(
+                modifier = Modifier
+                    .size(width = 131.dp, height = 43.dp)
+                    .background(Gray3, shape = RoundedCornerShape(12.dp))
+                    .align(Alignment.CenterHorizontally)
+                    .clickable {},
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "출석인증",
+                    style = body1_sb16,
+                    color = Gray5
+                )
             }
         }
     }
