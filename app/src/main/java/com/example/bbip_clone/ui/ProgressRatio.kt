@@ -1,6 +1,5 @@
 package com.example.bbip_clone.ui
 
-import android.util.Log
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -29,7 +28,7 @@ fun calculateProgressRatio(startTime: String, endTime: String): Float {
         val elapsedTime = (nowHour * 3600 + nowMinute * 60 + nowSecond) - (startHour * 3600 + startMinute * 60 + startSecond)
         val totalTime = (endHour * 3600 + endMinute * 60 + endSecond) - (startHour * 3600 + startMinute * 60 + startSecond)
         val result = 100 - (elapsedTime.toFloat() / totalTime.toFloat()) * 100f
-        Log.d("TimeDebug", "Now: $now, StartTime: $start, EndTime: $end, result: $result")
+        //Log.d("TimeDebug", "Now: $now, StartTime: $start, EndTime: $end, result: $result")
 
         result
     }
