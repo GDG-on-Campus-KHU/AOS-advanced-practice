@@ -37,20 +37,22 @@ import com.example.bbip_clone.ui.theme.Gray3
 import com.example.bbip_clone.ui.theme.Gray5
 import com.example.bbip_clone.ui.theme.Gray8
 import com.example.bbip_clone.ui.theme.MainWhite
+import com.example.bbip_clone.ui.theme.PrimaryDark
 import com.example.bbip_clone.ui.theme.body1_sb16
 import com.example.bbip_clone.ui.theme.body2_m14
 import com.example.bbip_clone.ui.theme.caption2_m12
 import com.example.bbip_clone.ui.theme.title4_sb24
+import kotlinx.coroutines.delay
 
 @Composable
 fun UserHomeScreen(navController: NavController) {
     var noticeCheck by remember { mutableStateOf(false) }
     var noticeText by remember { mutableStateOf("") }
+    var isAttendanceCheck by remember { mutableStateOf(false) }
+    var progressRatio by remember { mutableStateOf(0f) }
 
     val studySummaryDataList = remember { getStudySummaryData() }
     val todayStudy = studySummaryDataList.firstOrNull { it.isToday }
-
-    var progressRatio by remember { mutableStateOf(0f) }
 
     LaunchedEffect(Unit) {
         noticeCheck = getNotionCheck(true)
@@ -62,7 +64,7 @@ fun UserHomeScreen(navController: NavController) {
             todayStudy?.let { study ->
                 progressRatio = calculateProgressRatio(study.startTime, study.endTime)
             }
-            kotlinx.coroutines.delay(1000L)
+            delay(1000L)
         }
     }
 
@@ -81,6 +83,8 @@ fun UserHomeScreen(navController: NavController) {
                 noticeCheck = noticeCheck
             )
             Spacer(modifier = Modifier.height(13.dp))
+
+            val isInStudyTime = progressRatio in 0.001f..99.999f
 
             Box(
                 modifier = Modifier.fillMaxWidth(),
@@ -141,24 +145,29 @@ fun UserHomeScreen(navController: NavController) {
                 }
             }
             Spacer(modifier = Modifier.height(24.dp))
+
             Box(
                 modifier = Modifier
                     .size(width = 131.dp, height = 43.dp)
-                    .background(Gray3, shape = RoundedCornerShape(12.dp))
+                    .background(
+                        if (isInStudyTime && !isAttendanceCheck) PrimaryDark else Gray3,
+                        shape = RoundedCornerShape(12.dp)
+                    )
                     .align(Alignment.CenterHorizontally)
-                    .clickable {},
+                    .clickable(enabled = isInStudyTime && !isAttendanceCheck) {
+                        isAttendanceCheck = true
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "출석인증",
                     style = body1_sb16,
-                    color = Gray5
+                    color = if (isInStudyTime && !isAttendanceCheck) MainWhite else Gray5
                 )
             }
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun UserHomePreview() {
