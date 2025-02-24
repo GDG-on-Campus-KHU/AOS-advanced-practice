@@ -41,6 +41,8 @@ import com.example.bbip_clone.network.getNotice
 import com.example.bbip_clone.network.getNotionCheck
 import com.example.bbip_clone.network.getStudySummaryData
 import com.example.bbip_clone.network.getStudyWeekData
+import com.example.bbip_clone.network.getTeamMember
+import com.example.bbip_clone.network.getUpcomingScheduleData
 import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray2
 import com.example.bbip_clone.ui.theme.Gray3
@@ -255,11 +257,16 @@ fun UserHomeScreen(navController: NavController) {
                     color = Gray8,
                     modifier = Modifier.padding(start = 28.dp)
                 )
+                Spacer(modifier = Modifier.height(12.dp))
+                LazyRow {
+                    items(getUpcomingScheduleData()) { schedule ->
+                        UpcomingScheduleCard(schedule)
+                    }
+                }
             }
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun UserHomePreview() {
