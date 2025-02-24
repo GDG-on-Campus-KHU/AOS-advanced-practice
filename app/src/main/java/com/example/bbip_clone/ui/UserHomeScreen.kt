@@ -1,6 +1,9 @@
 package com.example.bbip_clone.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
@@ -30,18 +34,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.bbip_clone.R
 import com.example.bbip_clone.network.getBulletinBoardData
 import com.example.bbip_clone.network.getNotice
 import com.example.bbip_clone.network.getNotionCheck
 import com.example.bbip_clone.network.getStudySummaryData
 import com.example.bbip_clone.network.getStudyWeekData
-import com.example.bbip_clone.network.getTeamMember
 import com.example.bbip_clone.network.getUpcomingScheduleData
 import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray2
@@ -75,7 +81,7 @@ fun UserHomeScreen(navController: NavController) {
     val studySummaryDataList by remember { mutableStateOf(getStudySummaryData()) }
     val todayStudy = studySummaryDataList.firstOrNull { it.isToday }
     val bulletinList = getBulletinBoardData()
-
+    val context = LocalContext.current
     LaunchedEffect(Unit) {
         noticeCheck = getNotionCheck(true)
         noticeText = getNotice("id")
@@ -268,6 +274,19 @@ fun UserHomeScreen(navController: NavController) {
                         UpcomingScheduleCard(schedule)
                     }
                 }
+                Spacer(modifier = Modifier.height(24.dp))
+                Image(
+
+                    painter = painterResource(R.drawable.manual),
+                    contentDescription ="manual",
+                    modifier = Modifier
+                        .size(359.dp, 79.dp)
+                        .padding(horizontal = 17.dp)
+                        .clickable {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"))
+                            context.startActivity(intent)
+                        }
+                )
             }
         }
     }
@@ -277,5 +296,3 @@ fun UserHomeScreen(navController: NavController) {
 fun UserHomePreview() {
     UserHomeScreen(rememberNavController())
 }
-
-
