@@ -2,6 +2,7 @@ package com.example.bbip_clone.network
 
 import com.example.bbip_clone.R
 import com.example.bbip_clone.model.BulletinBoardData
+import com.example.bbip_clone.model.UpComingScheduleData
 import com.example.bbip_clone.model.StudySummaryData
 import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.model.TeamMember
@@ -79,4 +80,14 @@ fun getStudyWeekData(): List<ThisWeekStudyData> {
     studyWeekDataList.add(ThisWeekStudyData(R.drawable.ic_launcher_background,"JLPT N2 청해 스터디", "3R", "어학", "단어 시험, 교재 300~320p", "8월 14일", "12:00", "18:00", "스타벅스 강남역점"))
 
     return studyWeekDataList
+}
+
+fun getUpcomingScheduleData(): List<UpComingScheduleData> {
+    val  upComingScheduleDataList = mutableListOf<UpComingScheduleData>()
+
+    upComingScheduleDataList.add(UpComingScheduleData("D-12", "JLPT N2 접수"))
+    upComingScheduleDataList.add(UpComingScheduleData("D-20", "포트폴리오"))
+    upComingScheduleDataList.add(UpComingScheduleData("D-41", "3차 모고"))
+
+    return upComingScheduleDataList
 }
