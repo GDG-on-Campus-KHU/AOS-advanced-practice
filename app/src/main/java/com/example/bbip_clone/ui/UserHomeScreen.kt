@@ -57,6 +57,7 @@ import com.example.bbip_clone.ui.theme.body1_b16
 import com.example.bbip_clone.ui.theme.body1_sb16
 import com.example.bbip_clone.ui.theme.body2_m14
 import com.example.bbip_clone.ui.theme.caption2_m12
+import com.example.bbip_clone.ui.theme.comingTodos
 import com.example.bbip_clone.ui.theme.title4_sb24
 import com.example.bbip_clone.ui.theme.weekStudy
 import kotlinx.coroutines.delay
@@ -247,6 +248,13 @@ fun UserHomeScreen(navController: NavController) {
                     ThisWeekStudyCard(study)
                     Spacer(modifier = Modifier.height(8.dp))
                 }
+                Spacer(modifier = Modifier.height(23.dp))
+                Text(
+                    text = comingTodos,
+                    style = body1_b16,
+                    color = Gray8,
+                    modifier = Modifier.padding(start = 28.dp)
+                )
             }
         }
     }
