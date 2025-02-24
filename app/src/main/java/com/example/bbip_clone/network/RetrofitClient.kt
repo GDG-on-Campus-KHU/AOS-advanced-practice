@@ -85,9 +85,9 @@ fun getStudyWeekData(): List<ThisWeekStudyData> {
 fun getUpcomingScheduleData(): List<UpComingScheduleData> {
     val  upComingScheduleDataList = mutableListOf<UpComingScheduleData>()
 
-    upComingScheduleDataList.add(UpComingScheduleData("D-12", "JLPT N2 접수",R.drawable.ic_launcher_background))
-    upComingScheduleDataList.add(UpComingScheduleData("D-20", "포트폴리오",R.drawable.ic_launcher_background))
-    upComingScheduleDataList.add(UpComingScheduleData("D-41", "3차 모고",R.drawable.ic_launcher_background))
+    upComingScheduleDataList.add(UpComingScheduleData("D-12", "JLPT N2 접수",R.drawable.comingschedule1))
+    upComingScheduleDataList.add(UpComingScheduleData("D-20", "포트폴리오",R.drawable.comingschedule2))
+    upComingScheduleDataList.add(UpComingScheduleData("D-41", "3차 모고",R.drawable.comingschedule3))
 
     return upComingScheduleDataList
 }
