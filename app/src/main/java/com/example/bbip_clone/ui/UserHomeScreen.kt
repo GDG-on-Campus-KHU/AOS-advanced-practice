@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -88,12 +89,15 @@ fun UserHomeScreen(navController: NavController) {
 
     Scaffold(
         topBar = { AppBar("UserHome", noticeCheck, "") }
-    ) {
+    ) { paddingValues ->
         Box(
             modifier = Modifier
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .background(Gray1)
+                .padding(paddingValues)
                 .padding(bottom = 200.dp)
+
         ) {
             Column(
                 modifier = Modifier
@@ -101,10 +105,17 @@ fun UserHomeScreen(navController: NavController) {
                     .padding(horizontal = 16.dp)
             ) {
                 HorizontalDivider()
-                NoticeBar(
-                    noticeText = noticeText,
-                    noticeCheck = noticeCheck
-                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    NoticeBar(
+                        noticeText = noticeText,
+                        noticeCheck = noticeCheck
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(13.dp))
 
                 val isInStudyTime = progressRatio in 0.001f..99.999f
