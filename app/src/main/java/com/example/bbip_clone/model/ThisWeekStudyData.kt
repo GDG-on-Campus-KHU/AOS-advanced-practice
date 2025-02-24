@@ -1,6 +1,7 @@
 package com.example.bbip_clone.model
 
 data class ThisWeekStudyData(
+    val imageRes: Int,
     val title : String,
     val round : String,
     val theme : String,

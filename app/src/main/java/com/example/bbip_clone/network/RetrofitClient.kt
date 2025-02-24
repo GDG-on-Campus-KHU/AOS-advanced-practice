@@ -74,9 +74,9 @@ fun getBulletinBoardData(): List<BulletinBoardData> {
 fun getStudyWeekData(): List<ThisWeekStudyData> {
     val studyWeekDataList = mutableListOf<ThisWeekStudyData>()
 
-    studyWeekDataList.add(ThisWeekStudyData("JLPT N2 청해 스터디", "6R", "어학", "단어 시험, 교재 300~320p", "8월 13일", "12:00", "15:00", "미정"))
-    studyWeekDataList.add(ThisWeekStudyData("JLPT N2 청해 스터디", "8R", "어학", "2차 과제 제출 확인 및 피드백", "8월 9일", "15:00", "18:00", "비대면(디코)"))
-    studyWeekDataList.add(ThisWeekStudyData("JLPT N2 청해 스터디", "3R", "어학", "단어 시험, 교재 300~320p", "8월 14일", "12:00", "18:00", "스타벅스 강남역점"))
+    studyWeekDataList.add(ThisWeekStudyData(R.drawable.ic_launcher_background,"JLPT N2 청해 스터디", "6R", "어학", "단어 시험, 교재 300~320p", "8월 13일", "12:00", "15:00", "미정"))
+    studyWeekDataList.add(ThisWeekStudyData(R.drawable.ic_launcher_background,"JLPT N2 청해 스터디", "8R", "어학", "2차 과제 제출 확인 및 피드백", "8월 9일", "15:00", "18:00", "비대면(디코)"))
+    studyWeekDataList.add(ThisWeekStudyData(R.drawable.ic_launcher_background,"JLPT N2 청해 스터디", "3R", "어학", "단어 시험, 교재 300~320p", "8월 14일", "12:00", "18:00", "스타벅스 강남역점"))
 
     return studyWeekDataList
 }
