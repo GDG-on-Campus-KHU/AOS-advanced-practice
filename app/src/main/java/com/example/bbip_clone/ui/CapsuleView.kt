@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +44,8 @@ import com.example.bbip_clone.convertNumberToDate
 import com.example.bbip_clone.model.BulletinBoardData
 import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.model.TeamMember
+import com.example.bbip_clone.model.ThisWeekStudyData
+import com.example.bbip_clone.ui.theme.BlackStudyTitle
 import com.example.bbip_clone.ui.theme.Gray2
 import com.example.bbip_clone.ui.theme.Gray3
 import com.example.bbip_clone.ui.theme.Gray5
@@ -55,12 +58,15 @@ import com.example.bbip_clone.ui.theme.PrimaryDark
 import com.example.bbip_clone.ui.theme.addIcon
 import com.example.bbip_clone.ui.theme.archive
 import com.example.bbip_clone.ui.theme.body1_sb16
+import com.example.bbip_clone.ui.theme.body2_b14
 import com.example.bbip_clone.ui.theme.body2_m14
 import com.example.bbip_clone.ui.theme.button2_m16
 import com.example.bbip_clone.ui.theme.caption2_m12
 import com.example.bbip_clone.ui.theme.caption3_r12
 import com.example.bbip_clone.ui.theme.certification
+import com.example.bbip_clone.ui.theme.dateRangeIcon
 import com.example.bbip_clone.ui.theme.emptyContent
+import com.example.bbip_clone.ui.theme.homeIcon
 import com.example.bbip_clone.ui.theme.invite
 import com.example.bbip_clone.ui.theme.notice
 import com.example.bbip_clone.ui.theme.place
@@ -397,5 +403,125 @@ fun BulletinCard(
             color = Gray6,
             modifier = Modifier.align(Alignment.End)
         )
+    }
+}
+
+
+@Composable
+fun ThisWeekStudyCard(studyWeekData: ThisWeekStudyData) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 17.dp, end = 17.dp)
+            .background(MainWhite, RoundedCornerShape(12.dp))
+            .clickable { }
+    ) {
+        Row(
+            modifier = Modifier.padding(14.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = studyWeekData.imageRes),
+                contentDescription = studyWeekData.title,
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+            )
+
+            Spacer(modifier = Modifier.width(19.dp))
+
+            Column {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = studyWeekData.title,
+                        color = BlackStudyTitle,
+                        style = body1_sb16
+                    )
+                    Spacer(modifier = Modifier.weight(1f)) // ✅ 여백 추가해서 박스 오른쪽으로 밀기
+                    Box(
+                        modifier = Modifier
+                            .border(width = 1.dp, color = Gray2, shape = RoundedCornerShape(10.dp))
+                            .background(Gray2, shape = RoundedCornerShape(10.dp))
+                    ) {
+                        Text(
+                            text = studyWeekData.theme,
+                            color = Gray8,
+                            style = caption2_m12,
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(horizontal = 8.dp, vertical = 4.dp)
+
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Row() {
+                    Text(
+                        text = studyWeekData.round,
+                        color = PrimaryDark,
+                        style = body2_b14
+                    )
+                    Spacer(modifier = Modifier.width(7.dp))
+                    Text(
+                        text = studyWeekData.content,
+                        color = Gray8,
+                        style = body2_m14
+                    )
+                }
+            }
+        }
+
+        HorizontalDivider(
+            color = Gray3,
+            thickness = 1.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 12.dp, end = 10.5.dp)
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Row(
+            modifier = Modifier.padding(start = 12.dp, bottom = 15.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Icon(
+                imageVector = dateRangeIcon,
+                contentDescription = "",
+                modifier = Modifier.size(20.dp),
+                tint = Gray6
+            )
+            Spacer(modifier = Modifier.width(9.dp))
+            Text(
+                text = "${studyWeekData.studyDate} / ${studyWeekData.studyStartTime} ~ ${studyWeekData.studyEndTime}",
+                color = Gray7,
+                style = caption2_m12
+            )
+
+
+            Box(
+                modifier = Modifier
+                    .padding(start = 19.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = homeIcon,
+                        contentDescription = "",
+                        modifier = Modifier.size(20.dp),
+                        tint = Gray6
+                    )
+                    Spacer(modifier = Modifier.width(9.dp))
+                    Text(
+                        text = studyWeekData.location,
+                        color = Gray7,
+                        style = caption2_m12
+                    )
+                }
+            }
+        }
     }
 }
