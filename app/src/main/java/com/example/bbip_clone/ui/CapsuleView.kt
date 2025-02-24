@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -35,9 +36,11 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.bbip_clone.convertNumberToDate
+import com.example.bbip_clone.model.BulletinBoardData
 import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.model.TeamMember
 import com.example.bbip_clone.ui.theme.Gray2
@@ -55,9 +58,11 @@ import com.example.bbip_clone.ui.theme.body1_sb16
 import com.example.bbip_clone.ui.theme.body2_m14
 import com.example.bbip_clone.ui.theme.button2_m16
 import com.example.bbip_clone.ui.theme.caption2_m12
+import com.example.bbip_clone.ui.theme.caption3_r12
 import com.example.bbip_clone.ui.theme.certification
 import com.example.bbip_clone.ui.theme.emptyContent
 import com.example.bbip_clone.ui.theme.invite
+import com.example.bbip_clone.ui.theme.notice
 import com.example.bbip_clone.ui.theme.place
 
 @Composable
@@ -332,5 +337,65 @@ fun TimeRing(modifier: Modifier = Modifier, progressRatio: Float) {
                 style = Stroke(width = strokeWidth)
             )
         }
+    }
+}
+
+@Composable
+fun BulletinCard(
+    data: BulletinBoardData,
+    isStudyHomeScreen: Boolean = false,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .size(171.dp, 115.dp)
+            .background(color = MainWhite, shape = RoundedCornerShape(12.dp))
+            .clickable {}
+            .padding(13.dp)
+    ) {
+        val borderColor = when {
+            data.isNotice && !isStudyHomeScreen -> PrimaryDark
+            data.isNotice && isStudyHomeScreen -> PrimaryDark
+            !data.isNotice && !isStudyHomeScreen -> Gray7
+            else -> Gray2
+        }
+        val backgroundColor = if (!data.isNotice && isStudyHomeScreen) Gray2 else MainWhite
+        val text = when {
+            data.isNotice && isStudyHomeScreen -> notice
+            !data.isNotice && isStudyHomeScreen -> data.round!!
+            else -> data.studyTitle
+        }
+
+        Box(
+            modifier = Modifier
+                .border(width = 1.dp, color = borderColor, shape = RoundedCornerShape(10.dp))
+                .background(backgroundColor, shape = RoundedCornerShape(10.dp))
+        ) {
+            Text(
+                text = text,
+                color = if (!data.isNotice) Gray8 else PrimaryDark,
+                style = caption2_m12,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            )
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(
+            text = data.content,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            style = body2_m14,
+            color = Gray8,
+            textAlign = TextAlign.Start
+        )
+        Spacer(modifier = Modifier.height(7.dp))
+        Text(
+            text = data.writeTime,
+            style = caption3_r12,
+            color = Gray6,
+            modifier = Modifier.align(Alignment.End)
+        )
     }
 }

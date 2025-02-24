@@ -2,16 +2,21 @@ package com.example.bbip_clone.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.bbip_clone.network.getBulletinBoardData
 import com.example.bbip_clone.network.getNotice
 import com.example.bbip_clone.network.getNotionCheck
 import com.example.bbip_clone.network.getStudySummaryData
@@ -35,10 +41,15 @@ import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray2
 import com.example.bbip_clone.ui.theme.Gray3
 import com.example.bbip_clone.ui.theme.Gray5
+import com.example.bbip_clone.ui.theme.Gray7
 import com.example.bbip_clone.ui.theme.Gray8
 import com.example.bbip_clone.ui.theme.MainWhite
 import com.example.bbip_clone.ui.theme.PrimaryDark
+import com.example.bbip_clone.ui.theme.allView
+import com.example.bbip_clone.ui.theme.arrowRightIcon
 import com.example.bbip_clone.ui.theme.attendanceCertification
+import com.example.bbip_clone.ui.theme.board
+import com.example.bbip_clone.ui.theme.body1_b16
 import com.example.bbip_clone.ui.theme.body1_sb16
 import com.example.bbip_clone.ui.theme.body2_m14
 import com.example.bbip_clone.ui.theme.caption2_m12
@@ -54,6 +65,7 @@ fun UserHomeScreen(navController: NavController) {
 
     val studySummaryDataList = remember { getStudySummaryData() }
     val todayStudy = studySummaryDataList.firstOrNull { it.isToday }
+    val bulletinList = getBulletinBoardData()
 
     LaunchedEffect(Unit) {
         noticeCheck = getNotionCheck(true)
@@ -165,6 +177,41 @@ fun UserHomeScreen(navController: NavController) {
                     style = body1_sb16,
                     color = if (isInStudyTime && !isAttendanceCheck) MainWhite else Gray5
                 )
+            }
+            Spacer(Modifier.height(23.dp))
+            Row(
+                modifier = Modifier.padding(start = 28.dp, end = 18.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = board,
+                    style = body1_b16,
+                    color = Gray8
+                )
+                Spacer(Modifier.weight(1f))
+                Text(
+                    modifier = Modifier.clickable { },
+                    text = allView,
+                    style = body2_m14,
+                    color = Gray7
+                )
+                Icon(
+                    imageVector = arrowRightIcon,
+                    contentDescription = "화살표",
+                    tint = Gray7
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 17.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(bulletinList) { item ->
+                    BulletinCard(item)
+                }
             }
         }
     }
