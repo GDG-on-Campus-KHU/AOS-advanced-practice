@@ -142,3 +142,12 @@ val caption3_r12 = TextStyle(
     lineHeight = 17.sp,
     textAlign = TextAlign.Center
 )
+
+val UpcomingScheduleFont = TextStyle(
+    fontFamily = wantedSans,
+    fontWeight = FontWeight.W600,
+    fontSize = 18.sp,
+    lineHeight = 21.48.sp,
+    textAlign = TextAlign.Center,
+    letterSpacing = (-0.01).em
+)

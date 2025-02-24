@@ -45,7 +45,9 @@ import com.example.bbip_clone.model.BulletinBoardData
 import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.model.TeamMember
 import com.example.bbip_clone.model.ThisWeekStudyData
+import com.example.bbip_clone.model.UpComingScheduleData
 import com.example.bbip_clone.ui.theme.BlackStudyTitle
+import com.example.bbip_clone.ui.theme.Gray10
 import com.example.bbip_clone.ui.theme.Gray2
 import com.example.bbip_clone.ui.theme.Gray3
 import com.example.bbip_clone.ui.theme.Gray5
@@ -55,6 +57,7 @@ import com.example.bbip_clone.ui.theme.Gray8
 import com.example.bbip_clone.ui.theme.MainBlack
 import com.example.bbip_clone.ui.theme.MainWhite
 import com.example.bbip_clone.ui.theme.PrimaryDark
+import com.example.bbip_clone.ui.theme.UpcomingScheduleFont
 import com.example.bbip_clone.ui.theme.addIcon
 import com.example.bbip_clone.ui.theme.archive
 import com.example.bbip_clone.ui.theme.body1_sb16
@@ -524,4 +527,38 @@ fun ThisWeekStudyCard(studyWeekData: ThisWeekStudyData) {
             }
         }
     }
+}
+
+@Composable
+fun UpcomingScheduleCard(schedule: UpComingScheduleData) {
+    Column(
+        modifier = Modifier
+            .size(133.dp, 146.dp)
+            .shadow(16.dp, RoundedCornerShape(12.dp), spotColor = Gray2)
+            .background(MainWhite, RoundedCornerShape(12.dp))
+            .clickable { },
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(id = schedule.imageRes),
+            contentDescription = "",
+            modifier = Modifier
+                .size(53.dp)
+                .clip(CircleShape)
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(
+            text = schedule.restDate,
+            style = UpcomingScheduleFont,
+            color = Gray10
+        )
+        Spacer(Modifier.height(3.dp))
+        Text(
+            text = schedule.content,
+            style = body2_m14,
+            color = Gray7
+        )
+    }
+    Spacer(Modifier.width(8.dp))
 }

@@ -41,6 +41,8 @@ import com.example.bbip_clone.network.getNotice
 import com.example.bbip_clone.network.getNotionCheck
 import com.example.bbip_clone.network.getStudySummaryData
 import com.example.bbip_clone.network.getStudyWeekData
+import com.example.bbip_clone.network.getTeamMember
+import com.example.bbip_clone.network.getUpcomingScheduleData
 import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray2
 import com.example.bbip_clone.ui.theme.Gray3
@@ -57,6 +59,7 @@ import com.example.bbip_clone.ui.theme.body1_b16
 import com.example.bbip_clone.ui.theme.body1_sb16
 import com.example.bbip_clone.ui.theme.body2_m14
 import com.example.bbip_clone.ui.theme.caption2_m12
+import com.example.bbip_clone.ui.theme.comingTodos
 import com.example.bbip_clone.ui.theme.title4_sb24
 import com.example.bbip_clone.ui.theme.weekStudy
 import kotlinx.coroutines.delay
@@ -247,11 +250,28 @@ fun UserHomeScreen(navController: NavController) {
                     ThisWeekStudyCard(study)
                     Spacer(modifier = Modifier.height(8.dp))
                 }
+                Spacer(modifier = Modifier.height(23.dp))
+                Text(
+                    text = comingTodos,
+                    style = body1_b16,
+                    color = Gray8,
+                    modifier = Modifier.padding(start = 28.dp)
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 17.dp),
+                ) {
+
+                    items(getUpcomingScheduleData()) { schedule ->
+                        UpcomingScheduleCard(schedule)
+                    }
+                }
             }
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 fun UserHomePreview() {
