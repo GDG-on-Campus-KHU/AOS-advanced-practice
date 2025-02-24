@@ -258,7 +258,12 @@ fun UserHomeScreen(navController: NavController) {
                     modifier = Modifier.padding(start = 28.dp)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                LazyRow {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 17.dp),
+                ) {
+
                     items(getUpcomingScheduleData()) { schedule ->
                         UpcomingScheduleCard(schedule)
                     }
