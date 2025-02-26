@@ -1,6 +1,7 @@
 package com.example.bbip_clone.ui
 
 import android.util.Log
+import android.widget.Space
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -260,11 +261,10 @@ fun NoticeBar(
     contentColor: Color = Gray8,
     backgroundColor: Color = Gray2
 ) {
+    Spacer(Modifier.height(12.dp))
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .padding(vertical = 22.dp)
             .background(backgroundColor, shape = RoundedCornerShape(12.dp))
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically

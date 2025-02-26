@@ -52,7 +52,11 @@ import com.example.bbip_clone.R
 import com.example.bbip_clone.convertNumberToDate
 import com.example.bbip_clone.convertTodayDate
 import com.example.bbip_clone.formatNumber
+import com.example.bbip_clone.model.BulletinBoardData
 import com.example.bbip_clone.model.StudyWeekData
+import com.example.bbip_clone.network.getBulletinBoardData
+import com.example.bbip_clone.network.getNotice
+import com.example.bbip_clone.network.getNotionCheck
 import com.example.bbip_clone.network.getStudyTitle
 import com.example.bbip_clone.network.getStudyWeekData
 import com.example.bbip_clone.network.getTeamMember
@@ -60,6 +64,7 @@ import com.example.bbip_clone.network.getWeekData
 import com.example.bbip_clone.ui.theme.Gray1
 import com.example.bbip_clone.ui.theme.Gray2
 import com.example.bbip_clone.ui.theme.Gray5
+import com.example.bbip_clone.ui.theme.Gray6
 import com.example.bbip_clone.ui.theme.Gray7
 import com.example.bbip_clone.ui.theme.Gray8
 import com.example.bbip_clone.ui.theme.Gray9
@@ -69,6 +74,7 @@ import com.example.bbip_clone.ui.theme.PrimaryDark
 import com.example.bbip_clone.ui.theme.allView
 import com.example.bbip_clone.ui.theme.archive
 import com.example.bbip_clone.ui.theme.arrowRightIcon
+import com.example.bbip_clone.ui.theme.board
 import com.example.bbip_clone.ui.theme.body1_b16
 import com.example.bbip_clone.ui.theme.body2_m14
 import com.example.bbip_clone.ui.theme.caption2_m12
@@ -98,6 +104,9 @@ fun StudyHomeScreen(navController: NavController) {
     var lastWeekDate by remember { mutableStateOf("") }
     var thisWeekDateFormatted by remember { mutableStateOf("") }
     var thisWeekLocation by remember { mutableStateOf("") }
+    var noticeCheck by remember { mutableStateOf(false) }
+    var noticeText by remember { mutableStateOf("") }
+    var bulletinList by remember { mutableStateOf(emptyList<BulletinBoardData>()) }
     var thisWeekRoundFloat by remember { mutableFloatStateOf(0f) }
     var isRefreshing by remember { mutableStateOf(false) }
 
@@ -117,6 +126,9 @@ fun StudyHomeScreen(navController: NavController) {
             thisWeekLocation = it.location
             studyNotice = it.notice
         }
+        noticeCheck = getNotionCheck(true)
+        noticeText = getNotice("id")
+        bulletinList = getBulletinBoardData()
     }
 
     LaunchedEffect(Unit) {
@@ -156,7 +168,8 @@ fun StudyHomeScreen(navController: NavController) {
             Box(
                 modifier = Modifier
                     .background(Gray9)
-                    .height(300.dp)
+                    .padding(it)
+                    .height(310.dp)
                     .fillMaxWidth()
                     .align(Alignment.TopCenter)
             )
@@ -166,8 +179,8 @@ fun StudyHomeScreen(navController: NavController) {
                 contentDescription = "StudyMask",
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(top = 75.dp)
-                    .size(300.dp)
+                    .padding(it)
+                    .padding(top = 120.dp)
             )
 
             Column(
@@ -175,6 +188,14 @@ fun StudyHomeScreen(navController: NavController) {
                     .padding(it)
                     .padding(start = 16.dp, end = 16.dp)
             ) {
+                NoticeBar(
+                    noticeText = noticeText,
+                    noticeCheck = noticeCheck,
+                    contentColor = Gray6,
+                    backgroundColor = Gray8
+                )
+
+                Spacer(Modifier.height(18.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -268,35 +289,32 @@ fun StudyHomeScreen(navController: NavController) {
                             color = PrimaryDark,
                             trackColor = Gray2,
                         )
-                        Row {
-                            if (thisWeekRoundFloat != 0f) {
-                                Spacer(Modifier.weight(maxOf(animatedProgress, 0.0001f)))
+                        if (thisWeekRoundFloat != 0f) {
+                            Row {
+                                Spacer(Modifier.weight(maxOf(animatedProgress, 0.000001f)))
                                 Box(
                                     modifier = Modifier
                                         .size(12.dp)
                                         .clip(CircleShape)
                                         .background(PrimaryDark)
                                 )
-                                if ((studyLastRoundFloat - thisWeekRoundFloat) != 0f)
-                                    Spacer(
-                                        Modifier.weight(
-                                            maxOf(
-                                                studyLastRoundFloat - animatedProgress,
-                                                0.0001f
-                                            )
+                                Spacer(
+                                    Modifier.weight(
+                                        maxOf(
+                                            studyLastRoundFloat - animatedProgress,
+                                            0.000001f
                                         )
                                     )
+                                )
                             }
                         }
                     }
                 }
 
                 Spacer(Modifier.height(23.dp))
-                Row(
-                    modifier = Modifier.padding(start = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
+                        modifier = Modifier.padding(start = 12.dp),
                         text = weekActivities,
                         style = body1_b16,
                         color = Gray8
@@ -317,6 +335,34 @@ fun StudyHomeScreen(navController: NavController) {
                 Spacer(Modifier.height(14.dp))
                 studyData.drop((thisWeekRound.toIntOrNull() ?: 1) - 1).take(3)
                     .forEach { activity -> WeekActivityCard(activity, thisWeekRound) }
+
+                Spacer(Modifier.height(15.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        modifier = Modifier.padding(start = 12.dp),
+                        text = board,
+                        style = body1_b16,
+                        color = Gray8
+                    )
+                    Spacer(Modifier.weight(1f))
+                    Text(
+                        modifier = Modifier.clickable { },
+                        text = allView,
+                        style = body2_m14,
+                        color = Gray7
+                    )
+                    Icon(
+                        imageVector = arrowRightIcon,
+                        contentDescription = "화살표",
+                        tint = Gray7
+                    )
+                }
+                Spacer(Modifier.height(12.dp))
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(bulletinList) { item ->
+                        BulletinCard(item, true)
+                    }
+                }
 
                 Spacer(Modifier.height(23.dp))
                 Text(
