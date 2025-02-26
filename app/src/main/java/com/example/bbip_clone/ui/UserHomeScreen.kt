@@ -121,7 +121,9 @@ fun UserHomeScreen(navController: NavController) {
                 ) {
                     NoticeBar(
                         noticeText = noticeText,
-                        noticeCheck = noticeCheck
+                        noticeCheck = noticeCheck,
+                        contentColor = Gray8,
+                        backgroundColor = Gray2
                     )
                 }
 
