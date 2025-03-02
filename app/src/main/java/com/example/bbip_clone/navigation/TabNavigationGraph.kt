@@ -8,12 +8,12 @@ import com.example.bbip_clone.ui.StudyHomeScreen
 import com.example.bbip_clone.ui.UserHomeScreen
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
+fun TabNavigationGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = TabScreen.Home.route
     ) {
-        composable(Screen.Home.route) { UserHomeScreen(navController) }
-        composable(Screen.Study.route) { StudyHomeScreen(navController) }
+        composable(TabScreen.Home.route) { UserHomeScreen(navController) }
+        composable(TabScreen.Study.route) { StudyHomeScreen(navController) }
     }
 }
