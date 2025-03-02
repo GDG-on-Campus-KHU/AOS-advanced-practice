@@ -43,6 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
+import com.example.bbip_clone.convertTodayDate
+import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.network.getBulletinBoardData
 import com.example.bbip_clone.network.getNotice
 import com.example.bbip_clone.network.getNotionCheck
@@ -69,6 +71,7 @@ import com.example.bbip_clone.ui.theme.comingTodos
 import com.example.bbip_clone.ui.theme.title4_sb24
 import com.example.bbip_clone.ui.theme.weekStudy
 import kotlinx.coroutines.delay
+import android.util.Log
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -82,6 +85,19 @@ fun UserHomeScreen(navController: NavController) {
     val todayStudy = studySummaryDataList.firstOrNull { it.isToday }
     val bulletinList = getBulletinBoardData()
     val context = LocalContext.current
+    var studyData by remember { mutableStateOf(emptyList<StudyWeekData>()) }
+    var thisWeekRound by remember { mutableStateOf("") }
+    var studyLastRound by remember { mutableStateOf("") }
+
+    studyData = getStudyWeekData("id")
+    studyData.firstOrNull { it.date > convertTodayDate() }?.let {
+        thisWeekRound = it.round
+    }
+    studyLastRound = studyData.last().round
+    val thisWeekRoundFloat =thisWeekRound.toFloatOrNull() ?: 1f
+    val studyLastRoundFloat =studyLastRound.toFloatOrNull() ?: 1f
+
+
     LaunchedEffect(Unit) {
         noticeCheck = getNotionCheck(true)
         noticeText = getNotice("id")
@@ -134,9 +150,10 @@ fun UserHomeScreen(navController: NavController) {
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
+                    Log.d("TimeDebug", "start: $thisWeekRoundFloat, last : $studyLastRoundFloat")
                     TimeRing(
                         modifier = Modifier.fillMaxWidth(),
-                        progressRatio = progressRatio
+                        progressRatio = 100-(thisWeekRoundFloat / studyLastRoundFloat * 100)
                     )
 
                     todayStudy?.let { study ->

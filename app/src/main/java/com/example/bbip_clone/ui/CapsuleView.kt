@@ -335,7 +335,7 @@ fun TimeRing(modifier: Modifier = Modifier, progressRatio: Float) {
             style = Stroke(width = strokeWidth)
         )
         if (progressRatio in 0f..100f) {
-            val progressColor = if (progressRatio == 100f) Gray5 else PrimaryDark
+            val progressColor =PrimaryDark
             drawArc(
                 color = progressColor,
                 startAngle = -90f,
