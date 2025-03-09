@@ -254,13 +254,14 @@ fun UserHomeScreen(navController: NavController) {
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 17.dp),
+                        .padding(start = 17.dp, end = 8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(bulletinList) { item ->
                         BulletinCard(item)
                     }
                 }
+
                 Spacer(modifier = Modifier.height(23.dp))
                 Text(
                     text = weekStudy,
