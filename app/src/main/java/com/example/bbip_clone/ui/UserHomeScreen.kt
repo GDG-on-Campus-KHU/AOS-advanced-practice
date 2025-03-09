@@ -127,10 +127,10 @@ fun UserHomeScreen(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
             ) {
                 HorizontalDivider()
 
+                Spacer(modifier = Modifier.height((22.dp)))
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -143,7 +143,7 @@ fun UserHomeScreen(navController: NavController) {
                     )
                 }
 
-                Spacer(modifier = Modifier.height(13.dp))
+                Spacer(modifier = Modifier.height(35.dp))
 
                 val isInStudyTime = progressRatio in 0.001f..99.999f
                 Box(
@@ -254,11 +254,11 @@ fun UserHomeScreen(navController: NavController) {
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 17.dp),
+                        .padding(start = 17.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(bulletinList) { item ->
-                        BulletinCard(item, true)
+                        BulletinCard(item)
                     }
                 }
                 Spacer(modifier = Modifier.height(23.dp))
@@ -286,7 +286,7 @@ fun UserHomeScreen(navController: NavController) {
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 17.dp),
+                        .padding(start = 17.dp),
                 ) {
 
                     items(getUpcomingScheduleData()) { schedule ->
@@ -299,7 +299,7 @@ fun UserHomeScreen(navController: NavController) {
                     painter = painterResource(R.drawable.manual),
                     contentDescription ="manual",
                     modifier = Modifier
-                        .size(359.dp, 79.dp)
+                        .fillMaxSize()
                         .padding(horizontal = 17.dp)
                         .clickable {
                             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"))
