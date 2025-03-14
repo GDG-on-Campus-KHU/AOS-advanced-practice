@@ -261,12 +261,12 @@ fun NoticeBar(
     contentColor: Color = Gray8,
     backgroundColor: Color = Gray2
 ) {
-    Spacer(Modifier.height(12.dp))
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(horizontal = 16.dp)
             .background(backgroundColor, shape = RoundedCornerShape(12.dp))
-            .padding(8.dp),
+            .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -335,7 +335,7 @@ fun TimeRing(modifier: Modifier = Modifier, progressRatio: Float) {
             style = Stroke(width = strokeWidth)
         )
         if (progressRatio in 0f..100f) {
-            val progressColor = if (progressRatio == 100f) Gray5 else PrimaryDark
+            val progressColor =PrimaryDark
             drawArc(
                 color = progressColor,
                 startAngle = -90f,
@@ -358,9 +358,11 @@ fun BulletinCard(
     Column(
         modifier = modifier
             .size(171.dp, 115.dp)
+            .shadow(16.dp, RoundedCornerShape(12.dp), spotColor = Gray2)
             .background(color = MainWhite, shape = RoundedCornerShape(12.dp))
             .clickable {}
             .padding(13.dp)
+
     ) {
         val borderColor = when {
             data.isNotice && !isStudyHomeScreen -> PrimaryDark
@@ -415,7 +417,8 @@ fun ThisWeekStudyCard(studyWeekData: ThisWeekStudyData) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 17.dp, end = 17.dp)
+            .padding(horizontal = 17.dp)
+            .shadow(16.dp, RoundedCornerShape(12.dp), spotColor = Gray2)
             .background(MainWhite, RoundedCornerShape(12.dp))
             .clickable { }
     ) {
@@ -442,7 +445,7 @@ fun ThisWeekStudyCard(studyWeekData: ThisWeekStudyData) {
                         color = BlackStudyTitle,
                         style = body1_sb16
                     )
-                    Spacer(modifier = Modifier.weight(1f)) // ✅ 여백 추가해서 박스 오른쪽으로 밀기
+                    Spacer(modifier = Modifier.weight(1f))
                     Box(
                         modifier = Modifier
                             .border(width = 1.dp, color = Gray2, shape = RoundedCornerShape(10.dp))
