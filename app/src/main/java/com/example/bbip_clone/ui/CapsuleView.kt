@@ -409,6 +409,8 @@ fun BulletinCard(
             modifier = Modifier.align(Alignment.End)
         )
     }
+    Spacer(Modifier.width(8.dp))
+
 }
 
 

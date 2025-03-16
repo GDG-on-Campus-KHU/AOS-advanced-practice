@@ -72,6 +72,7 @@ import com.example.bbip_clone.ui.theme.title4_sb24
 import com.example.bbip_clone.ui.theme.weekStudy
 import kotlinx.coroutines.delay
 import android.util.Log
+import androidx.compose.foundation.layout.width
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -94,8 +95,8 @@ fun UserHomeScreen(navController: NavController) {
         thisWeekRound = it.round
     }
     studyLastRound = studyData.last().round
-    val thisWeekRoundFloat =thisWeekRound.toFloatOrNull() ?: 1f
-    val studyLastRoundFloat =studyLastRound.toFloatOrNull() ?: 1f
+    val thisWeekRoundFloat = thisWeekRound.toFloatOrNull() ?: 1f
+    val studyLastRoundFloat = studyLastRound.toFloatOrNull() ?: 1f
 
 
     LaunchedEffect(Unit) {
@@ -153,7 +154,7 @@ fun UserHomeScreen(navController: NavController) {
                     Log.d("TimeDebug", "start: $thisWeekRoundFloat, last : $studyLastRoundFloat")
                     TimeRing(
                         modifier = Modifier.fillMaxWidth(),
-                        progressRatio = 100-(thisWeekRoundFloat / studyLastRoundFloat * 100)
+                        progressRatio = 100 - (thisWeekRoundFloat / studyLastRoundFloat * 100)
                     )
 
                     todayStudy?.let { study ->
@@ -254,8 +255,7 @@ fun UserHomeScreen(navController: NavController) {
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 17.dp, end = 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        .padding(start = 17.dp),
                 ) {
                     items(bulletinList) { item ->
                         BulletinCard(item)
@@ -298,12 +298,13 @@ fun UserHomeScreen(navController: NavController) {
                 Image(
 
                     painter = painterResource(R.drawable.manual),
-                    contentDescription ="manual",
+                    contentDescription = "manual",
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = 17.dp)
                         .clickable {
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"))
+                            val intent =
+                                Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"))
                             context.startActivity(intent)
                         }
                 )
@@ -311,6 +312,7 @@ fun UserHomeScreen(navController: NavController) {
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun UserHomePreview() {
