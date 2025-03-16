@@ -6,7 +6,6 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
@@ -29,11 +27,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -71,8 +71,6 @@ import com.example.bbip_clone.ui.theme.comingTodos
 import com.example.bbip_clone.ui.theme.title4_sb24
 import com.example.bbip_clone.ui.theme.weekStudy
 import kotlinx.coroutines.delay
-import android.util.Log
-import androidx.compose.foundation.layout.width
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -80,8 +78,7 @@ fun UserHomeScreen(navController: NavController) {
     var noticeCheck by remember { mutableStateOf(false) }
     var noticeText by remember { mutableStateOf("") }
     var isAttendanceCheck by remember { mutableStateOf(false) }
-    var progressRatio by remember { mutableStateOf(0f) }
-
+    var progressRatio by remember { mutableFloatStateOf(0f) }
     val studySummaryDataList by remember { mutableStateOf(getStudySummaryData()) }
     val todayStudy = studySummaryDataList.firstOrNull { it.isToday }
     val bulletinList = getBulletinBoardData()
@@ -89,15 +86,14 @@ fun UserHomeScreen(navController: NavController) {
     var studyData by remember { mutableStateOf(emptyList<StudyWeekData>()) }
     var thisWeekRound by remember { mutableStateOf("") }
     var studyLastRound by remember { mutableStateOf("") }
+    val thisWeekRoundFloat = thisWeekRound.toFloatOrNull() ?: 1f
+    val studyLastRoundFloat = studyLastRound.toFloatOrNull() ?: 1f
 
     studyData = getStudyWeekData("id")
     studyData.firstOrNull { it.date > convertTodayDate() }?.let {
         thisWeekRound = it.round
     }
     studyLastRound = studyData.last().round
-    val thisWeekRoundFloat = thisWeekRound.toFloatOrNull() ?: 1f
-    val studyLastRoundFloat = studyLastRound.toFloatOrNull() ?: 1f
-
 
     LaunchedEffect(Unit) {
         noticeCheck = getNotionCheck(true)
@@ -123,19 +119,15 @@ fun UserHomeScreen(navController: NavController) {
                 .background(Gray1)
                 .padding(paddingValues)
                 .padding(bottom = 200.dp)
-
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
             ) {
                 HorizontalDivider()
 
-                Spacer(modifier = Modifier.height((22.dp)))
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
+                Spacer(modifier = Modifier.height((16.dp)))
+                Box {
                     NoticeBar(
                         noticeText = noticeText,
                         noticeCheck = noticeCheck,
@@ -144,14 +136,9 @@ fun UserHomeScreen(navController: NavController) {
                     )
                 }
 
-                Spacer(modifier = Modifier.height(35.dp))
-
                 val isInStudyTime = progressRatio in 0.001f..99.999f
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Log.d("TimeDebug", "start: $thisWeekRoundFloat, last : $studyLastRoundFloat")
+                Spacer(modifier = Modifier.height(35.dp))
+                Box(contentAlignment = Alignment.Center) {
                     TimeRing(
                         modifier = Modifier.fillMaxWidth(),
                         progressRatio = 100 - (thisWeekRoundFloat / studyLastRoundFloat * 100)
@@ -177,7 +164,6 @@ fun UserHomeScreen(navController: NavController) {
                             }
 
                             Spacer(modifier = Modifier.height(20.dp))
-
                             Text(
                                 text = study.title,
                                 style = title4_sb24,
@@ -187,17 +173,13 @@ fun UserHomeScreen(navController: NavController) {
                                 overflow = TextOverflow.Ellipsis,
                                 modifier = Modifier.fillMaxWidth(0.55f)
                             )
-
                             Spacer(modifier = Modifier.height(12.dp))
-
                             Text(
                                 text = "${study.startTime} - ${study.endTime}",
                                 style = body2_m14,
                                 color = Gray5
                             )
-
                             Spacer(modifier = Modifier.height(2.dp))
-
                             Text(
                                 text = study.location,
                                 style = body2_m14,
@@ -206,8 +188,8 @@ fun UserHomeScreen(navController: NavController) {
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(24.dp))
 
+                Spacer(modifier = Modifier.height(24.dp))
                 Box(
                     modifier = Modifier
                         .size(width = 131.dp, height = 43.dp)
@@ -227,15 +209,14 @@ fun UserHomeScreen(navController: NavController) {
                         color = if (isInStudyTime && !isAttendanceCheck) MainWhite else Gray5
                     )
                 }
+
                 Spacer(Modifier.height(23.dp))
-                Row(
-                    modifier = Modifier.padding(start = 28.dp, end = 18.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = board,
                         style = body1_b16,
-                        color = Gray8
+                        color = Gray8,
+                        modifier = Modifier.padding(start = 12.dp)
                     )
                     Spacer(Modifier.weight(1f))
                     Text(
@@ -251,62 +232,52 @@ fun UserHomeScreen(navController: NavController) {
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 17.dp),
-                ) {
+                LazyRow {
                     items(bulletinList) { item ->
                         BulletinCard(item)
                     }
                 }
 
+                val studyWeekData = getStudyWeekData()
                 Spacer(modifier = Modifier.height(23.dp))
                 Text(
                     text = weekStudy,
                     style = body1_b16,
                     color = Gray8,
-                    modifier = Modifier.padding(start = 28.dp)
+                    modifier = Modifier.padding(start = 12.dp)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-
-                val studyWeekData = getStudyWeekData()
                 studyWeekData.forEach { study ->
                     ThisWeekStudyCard(study)
                     Spacer(modifier = Modifier.height(8.dp))
                 }
+
                 Spacer(modifier = Modifier.height(23.dp))
                 Text(
                     text = comingTodos,
                     style = body1_b16,
                     color = Gray8,
-                    modifier = Modifier.padding(start = 28.dp)
+                    modifier = Modifier.padding(start = 12.dp)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 17.dp),
-                ) {
-
+                LazyRow {
                     items(getUpcomingScheduleData()) { schedule ->
                         UpcomingScheduleCard(schedule)
                     }
                 }
+
                 Spacer(modifier = Modifier.height(24.dp))
                 Image(
-
                     painter = painterResource(R.drawable.manual),
                     contentDescription = "manual",
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = 17.dp)
                         .clickable {
                             val intent =
                                 Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"))
                             context.startActivity(intent)
-                        }
+                        },
+                    contentScale = ContentScale.Crop
                 )
             }
         }
