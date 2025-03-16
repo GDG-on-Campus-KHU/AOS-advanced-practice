@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.times
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
+import com.example.bbip_clone.Value
 import com.example.bbip_clone.convertNumberToDate
 import com.example.bbip_clone.convertTodayDate
 import com.example.bbip_clone.formatNumber
@@ -184,200 +185,215 @@ fun StudyHomeScreen(navController: NavController) {
             )
 
             Spacer(modifier = Modifier.height((16.dp)))
-            Column(
-                modifier = Modifier
-                    .padding(it)
-                    .padding(horizontal = 16.dp)
-            ) {
-                NoticeBar(
-                    noticeText = noticeText,
-                    noticeCheck = noticeCheck,
-                    contentColor = Gray6,
-                    backgroundColor = Gray8
-                )
-
-                Spacer(Modifier.height(18.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RoundedBackgroundText("${thisWeekRound}R", caption2_m12, MainWhite, PrimaryDark)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = studyNotice,
-                        style = body2_m14,
-                        color = MainWhite,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
-
-                Spacer(Modifier.height(10.dp))
-                WeekInfo(homeIcon, thisWeekDateFormatted)
-                Spacer(Modifier.height(4.dp))
-                WeekInfo(dateRangeIcon, thisWeekLocation)
-
-                Spacer(Modifier.height(225.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 34.dp, end = 34.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    StudyOptions(R.drawable.attendance_certification, certification)
-                    StudyOptions(R.drawable.check_location, place)
-                    StudyOptions(R.drawable.archive, archive)
-                }
-
-                Spacer(Modifier.height(25.dp))
-                Text(
-                    modifier = Modifier.padding(start = 12.dp),
-                    text = progress,
-                    style = body1_b16,
-                    color = Gray8
-                )
-                Spacer(Modifier.height(12.dp))
+            Column {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .shadow(16.dp, RoundedCornerShape(12.dp), spotColor = Gray2)
-                        .background(MainWhite, RoundedCornerShape(12.dp))
-                        .padding(16.dp)
+                        .padding(it)
+                        .padding(horizontal = Value.outPadding)
                 ) {
+                    NoticeBar(
+                        noticeText = noticeText,
+                        noticeCheck = noticeCheck,
+                        contentColor = Gray6,
+                        backgroundColor = Gray8
+                    )
+
+                    Spacer(Modifier.height(18.dp))
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 5.dp, end = 5.dp)
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            text = "${thisWeekRound}R / ",
-                            style = title3_sb20,
-                            color = MainBlack
+                        RoundedBackgroundText(
+                            "${thisWeekRound}R",
+                            caption2_m12,
+                            MainWhite,
+                            PrimaryDark
                         )
+                        Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "${studyLastRound}R",
-                            style = title3_sb20,
-                            color = Gray5
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        Text(
-                            text = "(${formatNumber(thisWeekDate)}~${formatNumber(lastWeekDate)})",
-                            style = caption2_m12,
-                            color = Gray5
+                            text = studyNotice,
+                            style = body2_m14,
+                            color = MainWhite,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(12.dp))
-                    Box(modifier = Modifier.fillMaxWidth()) {
-                        val studyLastRoundFloat = studyLastRound.toFloatOrNull() ?: 1f
-                        val animatedProgress by animateFloatAsState(
-                            targetValue = thisWeekRoundFloat,
-                            animationSpec = tween(
-                                durationMillis = if (isRefreshing) 0 else 1000,
-                                easing = FastOutSlowInEasing
-                            ),
-                            label = "progress"
-                        )
-                        LinearProgressIndicator(
-                            progress = { animatedProgress / studyLastRoundFloat },
+                    Spacer(Modifier.height(10.dp))
+                    WeekInfo(homeIcon, thisWeekDateFormatted)
+                    Spacer(Modifier.height(4.dp))
+                    WeekInfo(dateRangeIcon, thisWeekLocation)
+
+                    Spacer(Modifier.height(225.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 34.dp, end = 34.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        StudyOptions(R.drawable.attendance_certification, certification)
+                        StudyOptions(R.drawable.check_location, place)
+                        StudyOptions(R.drawable.archive, archive)
+                    }
+
+                    Spacer(Modifier.height(25.dp))
+                    Text(
+                        modifier = Modifier.padding(start = 12.dp),
+                        text = progress,
+                        style = body1_b16,
+                        color = Gray8
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .shadow(16.dp, RoundedCornerShape(12.dp), spotColor = Gray2)
+                            .background(MainWhite, RoundedCornerShape(12.dp))
+                            .padding(16.dp)
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 3.dp, bottom = 3.dp)
-                                .height(7.dp)
-                                .clip(RoundedCornerShape(15.dp))
-                                .align(Alignment.Center),
-                            color = PrimaryDark,
-                            trackColor = Gray2,
-                        )
-                        if (thisWeekRoundFloat != 0f) {
-                            Row {
-                                Spacer(Modifier.weight(maxOf(animatedProgress, 0.000001f)))
-                                Box(
-                                    modifier = Modifier
-                                        .size(12.dp)
-                                        .clip(CircleShape)
-                                        .background(PrimaryDark)
-                                )
-                                Spacer(
-                                    Modifier.weight(
-                                        maxOf(
-                                            studyLastRoundFloat - animatedProgress,
-                                            0.000001f
+                                .padding(start = 5.dp, end = 5.dp)
+                        ) {
+                            Text(
+                                text = "${thisWeekRound}R / ",
+                                style = title3_sb20,
+                                color = MainBlack
+                            )
+                            Text(
+                                text = "${studyLastRound}R",
+                                style = title3_sb20,
+                                color = Gray5
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+                            Text(
+                                text = "(${formatNumber(thisWeekDate)}~${formatNumber(lastWeekDate)})",
+                                style = caption2_m12,
+                                color = Gray5
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Box(modifier = Modifier.fillMaxWidth()) {
+                            val studyLastRoundFloat = studyLastRound.toFloatOrNull() ?: 1f
+                            val animatedProgress by animateFloatAsState(
+                                targetValue = thisWeekRoundFloat,
+                                animationSpec = tween(
+                                    durationMillis = if (isRefreshing) 0 else 1000,
+                                    easing = FastOutSlowInEasing
+                                ),
+                                label = "progress"
+                            )
+                            LinearProgressIndicator(
+                                progress = { animatedProgress / studyLastRoundFloat },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 3.dp, bottom = 3.dp)
+                                    .height(7.dp)
+                                    .clip(RoundedCornerShape(15.dp))
+                                    .align(Alignment.Center),
+                                color = PrimaryDark,
+                                trackColor = Gray2,
+                            )
+                            if (thisWeekRoundFloat != 0f) {
+                                Row {
+                                    Spacer(Modifier.weight(maxOf(animatedProgress, 0.000001f)))
+                                    Box(
+                                        modifier = Modifier
+                                            .size(12.dp)
+                                            .clip(CircleShape)
+                                            .background(PrimaryDark)
+                                    )
+                                    Spacer(
+                                        Modifier.weight(
+                                            maxOf(
+                                                studyLastRoundFloat - animatedProgress,
+                                                0.000001f
+                                            )
                                         )
                                     )
-                                )
+                                }
                             }
                         }
                     }
-                }
 
-                Spacer(Modifier.height(23.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        modifier = Modifier.padding(start = 12.dp),
-                        text = weekActivities,
-                        style = body1_b16,
-                        color = Gray8
-                    )
-                    Spacer(Modifier.weight(1f))
-                    Text(
-                        modifier = Modifier.clickable { },
-                        text = allView,
-                        style = body2_m14,
-                        color = Gray7
-                    )
-                    Icon(
-                        imageVector = arrowRightIcon,
-                        contentDescription = "화살표",
-                        tint = Gray7
-                    )
-                }
-                Spacer(Modifier.height(14.dp))
-                studyData.drop((thisWeekRound.toIntOrNull() ?: 1) - 1).take(3)
-                    .forEach { activity -> WeekActivityCard(activity, thisWeekRound) }
-
-                Spacer(Modifier.height(15.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        modifier = Modifier.padding(start = 12.dp),
-                        text = board,
-                        style = body1_b16,
-                        color = Gray8
-                    )
-                    Spacer(Modifier.weight(1f))
-                    Text(
-                        modifier = Modifier.clickable { },
-                        text = allView,
-                        style = body2_m14,
-                        color = Gray7
-                    )
-                    Icon(
-                        imageVector = arrowRightIcon,
-                        contentDescription = "화살표",
-                        tint = Gray7
-                    )
-                }
-                Spacer(Modifier.height(12.dp))
-                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(bulletinList) { item ->
-                        BulletinCard(item, true)
+                    Spacer(Modifier.height(23.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            modifier = Modifier.padding(start = 12.dp),
+                            text = weekActivities,
+                            style = body1_b16,
+                            color = Gray8
+                        )
+                        Spacer(Modifier.weight(1f))
+                        Text(
+                            modifier = Modifier.clickable { },
+                            text = allView,
+                            style = body2_m14,
+                            color = Gray7
+                        )
+                        Icon(
+                            imageVector = arrowRightIcon,
+                            contentDescription = "화살표",
+                            tint = Gray7
+                        )
                     }
+                    Spacer(Modifier.height(14.dp))
+                    studyData.drop((thisWeekRound.toIntOrNull() ?: 1) - 1).take(3)
+                        .forEach { activity -> WeekActivityCard(activity, thisWeekRound) }
+
                 }
 
-                Spacer(Modifier.height(23.dp))
-                Text(
-                    modifier = Modifier.padding(start = 12.dp),
-                    text = studyMembers,
-                    style = body1_b16
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                LazyRow {
-                    items(getTeamMember("id")) { member ->
-                        TeamMemberCard(member)
+                Column {
+                    Spacer(Modifier.height(15.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(horizontal = Value.outPadding)
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(start = 12.dp),
+                            text = board,
+                            style = body1_b16,
+                            color = Gray8
+                        )
+                        Spacer(Modifier.weight(1f))
+                        Text(
+                            modifier = Modifier.clickable { },
+                            text = allView,
+                            style = body2_m14,
+                            color = Gray7
+                        )
+                        Icon(
+                            imageVector = arrowRightIcon,
+                            contentDescription = "화살표",
+                            tint = Gray7
+                        )
                     }
-                    item {
-                        InviteButton()
+                    Spacer(Modifier.height(12.dp))
+                    LazyRow(modifier = Modifier.padding(start = Value.outPadding)) {
+                        items(bulletinList) { item ->
+                            BulletinCard(item, true)
+                        }
+                    }
+
+                    Spacer(Modifier.height(23.dp))
+                    Text(
+                        modifier = Modifier
+                            .padding(Value.outPadding)
+                            .padding(start = 12.dp),
+                        text = studyMembers,
+                        style = body1_b16
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    LazyRow(modifier = Modifier.padding(start = Value.outPadding)) {
+                        items(getTeamMember("id")) { member ->
+                            TeamMemberCard(member)
+                        }
+                        item {
+                            InviteButton()
+                        }
                     }
                 }
             }
@@ -385,8 +401,8 @@ fun StudyHomeScreen(navController: NavController) {
 
         Box(
             modifier = Modifier
-                .padding(it)
                 .fillMaxWidth()
+                .padding(it)
         ) {
             PullRefreshIndicator(
                 refreshing = isRefreshing,
