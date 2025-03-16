@@ -34,8 +34,8 @@ fun getStudyWeekData(id: String): List<StudyWeekData> {
     studyDataList.add(StudyWeekData("6", "", "20250110"))
     studyDataList.add(StudyWeekData("7", "", "20250117"))
     studyDataList.add(StudyWeekData("8", "", "20250215"))
-    studyDataList.add(StudyWeekData("9", "오늘은 공부하지 말까여..", "20250222"))
-    studyDataList.add(StudyWeekData("10", "", "20250230"))
+    studyDataList.add(StudyWeekData("9", "오늘은 공부하지 말까여..", "20250305"))
+    studyDataList.add(StudyWeekData("10", "", "20250310"))
 
     return studyDataList
 }
