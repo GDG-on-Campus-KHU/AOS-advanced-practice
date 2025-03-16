@@ -183,10 +183,11 @@ fun StudyHomeScreen(navController: NavController) {
                     .padding(top = 120.dp)
             )
 
+            Spacer(modifier = Modifier.height((16.dp)))
             Column(
                 modifier = Modifier
                     .padding(it)
-                    .padding(start = 16.dp, end = 16.dp)
+                    .padding(horizontal = 16.dp)
             ) {
                 NoticeBar(
                     noticeText = noticeText,

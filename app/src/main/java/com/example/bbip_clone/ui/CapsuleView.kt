@@ -264,7 +264,6 @@ fun NoticeBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
             .background(backgroundColor, shape = RoundedCornerShape(12.dp))
             .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -301,7 +300,6 @@ fun NoticeBar(
         }
 
         Spacer(modifier = Modifier.width(16.dp))
-
         Text(
             text = noticeText,
             style = body2_m14,
@@ -419,7 +417,6 @@ fun ThisWeekStudyCard(studyWeekData: ThisWeekStudyData) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 17.dp)
             .shadow(16.dp, RoundedCornerShape(12.dp), spotColor = Gray2)
             .background(MainWhite, RoundedCornerShape(12.dp))
             .clickable { }
