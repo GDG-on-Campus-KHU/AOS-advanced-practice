@@ -1,7 +1,6 @@
 package com.example.bbip_clone.ui
 
 import android.util.Log
-import android.widget.Space
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -408,9 +407,7 @@ fun BulletinCard(
         )
     }
     Spacer(Modifier.width(8.dp))
-
 }
-
 
 @Composable
 fun ThisWeekStudyCard(studyWeekData: ThisWeekStudyData) {

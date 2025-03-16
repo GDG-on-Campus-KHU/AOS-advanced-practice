@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.navigation.TabNavigationGraph
@@ -19,6 +20,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             TabScreen()
         }
+    }
+}
+
+class Value {
+    companion object{
+        val outPadding = 10.dp
     }
 }
 

@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.bbip_clone.R
+import com.example.bbip_clone.Value
 import com.example.bbip_clone.convertTodayDate
 import com.example.bbip_clone.model.StudyWeekData
 import com.example.bbip_clone.network.getBulletinBoardData
@@ -120,14 +121,11 @@ fun UserHomeScreen(navController: NavController) {
                 .padding(paddingValues)
                 .padding(bottom = 200.dp)
         ) {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-            ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
                 HorizontalDivider()
 
                 Spacer(modifier = Modifier.height((16.dp)))
-                Box {
+                Box(modifier = Modifier.padding(horizontal = Value.outPadding)) {
                     NoticeBar(
                         noticeText = noticeText,
                         noticeCheck = noticeCheck,
@@ -211,7 +209,10 @@ fun UserHomeScreen(navController: NavController) {
                 }
 
                 Spacer(Modifier.height(23.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(horizontal = Value.outPadding)
+                ) {
                     Text(
                         text = board,
                         style = body1_b16,
@@ -232,7 +233,7 @@ fun UserHomeScreen(navController: NavController) {
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                LazyRow {
+                LazyRow(modifier = Modifier.padding(start = Value.outPadding)) {
                     items(bulletinList) { item ->
                         BulletinCard(item)
                     }
@@ -244,12 +245,16 @@ fun UserHomeScreen(navController: NavController) {
                     text = weekStudy,
                     style = body1_b16,
                     color = Gray8,
-                    modifier = Modifier.padding(start = 12.dp)
+                    modifier = Modifier
+                        .padding(start = Value.outPadding)
+                        .padding(start = 12.dp)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 studyWeekData.forEach { study ->
-                    ThisWeekStudyCard(study)
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Column(modifier = Modifier.padding(horizontal = Value.outPadding)) {
+                        ThisWeekStudyCard(study)
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(23.dp))
@@ -257,10 +262,12 @@ fun UserHomeScreen(navController: NavController) {
                     text = comingTodos,
                     style = body1_b16,
                     color = Gray8,
-                    modifier = Modifier.padding(start = 12.dp)
+                    modifier = Modifier
+                        .padding(start = Value.outPadding)
+                        .padding(start = 12.dp)
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                LazyRow {
+                LazyRow(modifier = Modifier.padding(start = Value.outPadding)) {
                     items(getUpcomingScheduleData()) { schedule ->
                         UpcomingScheduleCard(schedule)
                     }
@@ -272,6 +279,7 @@ fun UserHomeScreen(navController: NavController) {
                     contentDescription = "manual",
                     modifier = Modifier
                         .fillMaxSize()
+                        .padding(Value.outPadding)
                         .clickable {
                             val intent =
                                 Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"))
